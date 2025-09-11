@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+    <template></template>
+<style>
+    #container {
+        border: 60px;
+        text-align: center;
+        display: flex;
+        justify-content: center;
+        /* 가로 가운데 */
+        align-items: center;
+        /* 세로 가운데 */
+        height: 100vh;
+    }
+
+    table,
+    tr,
+    th,
+    td {
+        border: 2px solid black;
+        text-align: center;
+        padding: 5px 20px;
+        border-collapse: collapse;
+    }
+
+    th {
+        background-color: beige;
+    }
+
+    tr:nth-child(odd) {
+        background-color: #eee;
+    }
+
+    .image {
+        width: 150px;
+        margin-bottom: 20px;
+    }
+
+    .input-box {
+        padding: 10px;
+        width: 200px;
+    }
+
+    .icon {
+        position: absolute;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 100vh;
+    }
+    .longin {
+        display: flex;
+        justify-content: center;
+        /* 가로 가운데 */
+        align-items: center;
+        height: 100vh;
+    }
+</style>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <div id="container">
+            <div><label>아이디 : <input type="text" v-model="userId"></label></div>
+            <div><label>비밀번호 : <input type="password" v-model="pwd"></label></div>
+             
+            <button @click="fnLogin" class="login" >로그인</button>
+            <button class="login">회원가입</button>
+        
+        </div>
+     
+    </div>
+</body>
+
+</html>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                // 변수 - (key : value)
+                userId: "",
+                pwd: ""
+            };
+        },
+        methods: {
+            // 함수(메소드) - (key : function())
+            fnLogin: function () {
+                let self = this;
+                let userId = this;
+                let param = {
+                    userId: self.userId,
+                    pwd: self.pwd
+                };
+                $.ajax({
+                    url: "http://localhost:3009/login",
+                    dataType: "json",
+                    type: "GET",
+                    data: param,
+                    success: function (data) {
+                        console.log(data);
+                        if (data.length > 0) {
+                            // 로그인 성공
+                            alert(data[0].NAME + "님 환영합니다.")
+                            sessionStorage.setItem("sesstionId", data[0].USERID);
+                            sessionStorage.setItem("sesstionStatus", data[0].STATUS);
+                            location.href = "1_board-list.html"
+                        } else {
+                            // 로그인 실패
+                            alert("아이디/비밀번호를 확인해주세요.")
+                        }
+
+                    }
+                });
+            }
+        }, // methods
+        mounted() {
+            // 처음 시작할 때 실행되는 부분
+        }
+    });
+
+    app.mount('#app');
+</script>
