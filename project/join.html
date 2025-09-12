@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap');
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background-image: image("img/poto.jpg");
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #333;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 50px auto;
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 40px 50px;
+            box-shadow: 0 0 5px #ccc;
+        }
+
+        .signup-box {
+            max-width: 350px;
+            margin: 0 auto;
+            padding: 40px 40px 50px;
+            border-radius: 20px;
+            background-color: #fff;
+            box-shadow: 0 0 5px #110a30;
+        }
+
+        .signup-box h2 {
+            font-weight: 700;
+            font-size: 16px;
+            margin-bottom: 8px;
+        }
+
+        .signup-box p.desc {
+            font-size: 12px;
+            margin-bottom: 20px;
+            color: #666;
+        }
+
+        input[type="text"],
+        input[type="password"],
+        select {
+            width: 100%;
+            height: 34px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 0 10px;
+            margin-bottom: 5px;
+            font-size: 13px;
+            color: #999;
+        }
+
+        input::placeholder {
+            color: #ccc;
+        }
+
+        button.check-btn {
+            background-color: #7b67f7;
+            border: none;
+            color: white;
+            padding: 0 12px;
+            font-size: 11px;
+            height: 36px;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-left: 5px;
+        }
+
+        .id-row {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 5px;
+        }
+
+        .id-row input {
+            flex-grow: 1;
+            margin-bottom: 0;
+        }
+
+        .error-msg {
+            font-size: 10px;
+            color: #f47f7f;
+            margin-bottom: 10px;
+        }
+
+        .email-row {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-bottom: 20px;
+        }
+
+        .email-row input {
+            flex-grow: 1;
+            margin-bottom: 0;
+        }
+
+        .email-row select {
+            width: 120px;
+            height: 34px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding-left: 10px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        .dob-row {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+
+        }
+
+        .dob-row select {
+            width: 80px;
+            height: 34px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding-left: 10px;
+            font-size: 13px;
+            color: #333;
+        }
+
+        input.phone {
+            width: 100%;
+            height: 34px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            padding: 0 10px;
+            font-size: 13px;
+            color: #999;
+            margin-bottom: 30px;
+        }
+
+        button.submit-btn {
+            width: 100%;
+            height: 38px;
+            border-radius: 5px;
+            border: none;
+            background-color: #7b67f7;
+            color: white;
+            font-size: 13px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- html 코드는 id가 app인 태그 안에서 꼭 작업-->
+
+        <body>
+            <div class="container">
+                <div class="signup-box">
+                    <h2>회원가입</h2>
+                    <p class="desc">가입을 통해 더 다양한 서비스를 만나보세요!</p>
+                    <form>
+                        <div class="id-row">
+                            <input type="text" placeholder="아이디 입력 (6~20자)" />
+                            <button type="button" class="check-btn">중복 확인</button>
+                        </div>
+                        <div class="error-msg">사용할 수 없는 아이디입니다</div>
+
+                        <input type="password" placeholder="비밀번호 입력 (문자, 숫자, 특수문자 포함 8~20자)" />
+                        <div class="error-msg" style="margin-top: 3px;">20자 이내 비밀번호를 입력해주세요</div>
+
+                        <input type="password" placeholder="비밀번호 재입력" />
+                        <div class="error-msg" style="margin-top: 3px;">비밀번호가 일치하지 않습니다</div>
+
+                        <div class="email-row">
+                            <input type="text" placeholder="이메일 주소" />
+                            <span>@</span>
+                            <select>
+                                <option>naver.com</option>
+                                <option>gmail.com</option>
+                                <option>daum.net</option>
+                                <option>kakaocorp.com</option>
+                                <option>facebook.com</option>
+                            </select>
+                        </div>
+
+                        <div class="dob-row">
+                            <select>
+                                <option>년도</option>
+                                <option>2025</option>
+                                <option>2024</option>
+                                <option>2023</option>
+                            </select>
+                            <select >
+                                <option>월</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                        
+                            </select>
+                            <select>
+                                <option>일</option>
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                            </select>
+                        </div>
+
+                        <input type="text" class="phone" placeholder="휴대폰 번호 입력 ('-' 제외 11자리 입력)" />
+
+                        <button type="submit" class="submit-btn">가입하기</button>
+                    </form>
+                </div>
+            </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+
+    const app = Vue.createApp({
+        data() {
+            return {
+                // 변수 - (key : value)
+
+            };
+        },
+        methods: {
+            // 함수(메소드) - (key : function())
+            fnUserList: function () {
+                let self = this;
+                let param = {};
+                $.ajax({
+                    url: "http://localhost:3009/",
+                    dataType: "json",
+                    type: "GET",
+                    data: param,
+                    success: function (data) {
+
+                    }
+                });
+            },
+            
+
+        }, // methods
+        mounted() {
+            // 처음 시작할 때 실행되는 부분
+            let self = this;
+            
+        }
+    });
+
+    app.mount('#app');
+</script>

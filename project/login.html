@@ -1,60 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-    <template></template>
-<style>
-    #container {
-        border: 60px;
-        text-align: center;
-        display: flex;
-        justify-content: center;
-        /* 가로 가운데 */
-        align-items: center;
-        /* 세로 가운데 */
-        height: 100vh;
-    }
-
-    table,
-    tr,
-    th,
-    td {
-        border: 2px solid black;
-        text-align: center;
-        padding: 5px 20px;
-        border-collapse: collapse;
-    }
-
-    th {
-        background-color: beige;
-    }
-
-    tr:nth-child(odd) {
-        background-color: #eee;
-    }
-
-    .image {
-        width: 150px;
-        margin-bottom: 20px;
-    }
-
-    .input-box {
-        padding: 10px;
-        width: 200px;
-    }
-
-    .icon {
-        position: absolute;
-        transform: translateY(-50%);
-        width: 20px;
-        height: 100vh;
-    }
-    .longin {
-        display: flex;
-        justify-content: center;
-        /* 가로 가운데 */
-        align-items: center;
-        height: 100vh;
-    }
-</style>
 
 <head>
     <meta charset="UTF-8">
@@ -63,59 +8,143 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        /* Reset */
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body,
+        html {
+            height: 100%;
+            background: url('/img/run.jpg') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .login-container {
+            background: rgba(0, 0, 0, 0.6);
+            padding: 40px 30px;
+            width: 360px;
+            border-radius: 10px;
+            color: white;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+        }
+
+        .login-container h1 {
+            margin-bottom: 40px;
+            font-weight: 700;
+            font-size: 28px;
+        }
+
+        label {
+            display: block;
+            text-align: left;
+            font-size: 12px;
+            color: #3b82f6;
+            margin-bottom: 6px;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+        }
+
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px 8px;
+            font-size: 16px;
+            color: white;
+            background: transparent;
+            border: none;
+            border-bottom: 2px solid #3b82f6;
+            margin-bottom: 25px;
+            outline: none;
+            transition: border-color 0.3s;
+        }
+
+        input[type="text"]::placeholder,
+        input[type="password"]::placeholder {
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus {
+            border-color: #60a5fa;
+        }
+
+        button {
+            width: 100%;
+            background-color: #2563eb;
+            border: none;
+            padding: 14px 0;
+            color: white;
+            font-weight: 700;
+            font-size: 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            margin-bottom: 20px;
+        }
+
+        button:hover {
+            background-color: #1d4ed8;
+        }
+
+        .forgot-password {
+            font-size: 14px;
+            color: #9ca3af;
+            cursor: pointer;
+            text-decoration: underline;
+            user-select: none;
+        }
+
+        .forgot-password:hover {
+            color: #60a5fa;
+        }
+    </style>
 </head>
 
 <body>
-    <div id="app">
-        <div id="container">
-            <div><label>아이디 : <input type="text" v-model="userId"></label></div>
-            <div><label>비밀번호 : <input type="password" v-model="pwd"></label></div>
-             
-            <button @click="fnLogin" class="login" >로그인</button>
-            <button class="login">회원가입</button>
-        
-        </div>
-     
+    <div class="login-container">
+        <h1>LOGO DESIGN</h1>
+        <form>
+            <label for="username">ID</label>
+            <input type="text" id="id" placeholder="아이디를 입력해주세요" />
+
+            <label for="password">PASSWORD</label>
+            <input type="password" id="password" placeholder="비밀번호를 입력해주세요" />
+
+            <button type="submit">LOGIN</button>
+            <div class="forgot-password">Forgot Password?</div>
+        </form>
     </div>
 </body>
 
 </html>
-
 <script>
     const app = Vue.createApp({
         data() {
             return {
                 // 변수 - (key : value)
-                userId: "",
-                pwd: ""
+
             };
         },
         methods: {
             // 함수(메소드) - (key : function())
-            fnLogin: function () {
+            fnUserList: function () {
                 let self = this;
-                let userId = this;
-                let param = {
-                    userId: self.userId,
-                    pwd: self.pwd
-                };
+                let param = {};
                 $.ajax({
-                    url: "http://localhost:3009/login",
+                    url: "http://localhost:3009/",
                     dataType: "json",
                     type: "GET",
                     data: param,
                     success: function (data) {
-                        console.log(data);
-                        if (data.length > 0) {
-                            // 로그인 성공
-                            alert(data[0].NAME + "님 환영합니다.")
-                            sessionStorage.setItem("sesstionId", data[0].USERID);
-                            sessionStorage.setItem("sesstionStatus", data[0].STATUS);
-                            location.href = "1_board-list.html"
-                        } else {
-                            // 로그인 실패
-                            alert("아이디/비밀번호를 확인해주세요.")
-                        }
 
                     }
                 });
@@ -123,6 +152,7 @@
         }, // methods
         mounted() {
             // 처음 시작할 때 실행되는 부분
+            let self = this;
         }
     });
 
