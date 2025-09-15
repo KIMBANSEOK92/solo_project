@@ -30,7 +30,7 @@
         body,
         html {
             height: 100%;
-            background: url('/img/run.jpg') no-repeat center center fixed;
+            background: url('/img/run1.jpg') no-repeat center center fixed;
             background-size: cover;
             display: flex;
             justify-content: center;
@@ -48,7 +48,7 @@
         }
 
         .login-container h1 {
-            margin-bottom: 40px;
+            margin-bottom: 30px;
             font-weight: 700;
             font-size: 28px;
         }
@@ -113,7 +113,20 @@
             user-select: none;
         }
 
+        .forgot-create {
+            font-size: 14px;
+            color: #9ca3af;
+            cursor: pointer;
+            text-decoration: underline;
+            user-select: none;
+            margin: 5px;
+        }
+
         .forgot-password:hover {
+            color: #60a5fa;
+        }
+
+        .forgot-create:hover {
             color: #60a5fa;
         }
     </style>
@@ -126,13 +139,15 @@
         <div class="login-container">
             <form>
                 <label for="username">ID</label>
-                <input type="text" id="id" placeholder="아이디를 입력해주세요" />
+                <input type="text" id="userId" v-model="userId" placeholder="아이디를 입력해주세요" />
 
                 <label for="password">PASSWORD</label>
-                <input type="password" id="password" placeholder="비밀번호를 입력해주세요" />
+                <input type="password" id="password" v-model="pwd" placeholder="비밀번호를 입력해주세요" />
 
-                <button type="submit">LOGIN</button>
-                <div class="forgot-password">Forgot Password?</div>
+                <button @click="fnLogin">로그인</button>
+                <div class="forgot-create">회원가입</div>
+                <div class="forgot-password">비밀번호를 잊어버리셨나요?</div>
+
             </form>
         </div>
 </body>
@@ -143,21 +158,36 @@
         data() {
             return {
                 // 변수 - (key : value)
-
+                userId: "",
+                pwd: ""
             };
         },
         methods: {
             // 함수(메소드) - (key : function())
-            fnUserList: function () {
+            fnLogin: function () {
                 let self = this;
-                let param = {};
+                let userId = this;
+                let param = {
+                    userId: self.userId,
+                    pwd: self.pwd
+                };
                 $.ajax({
-                    url: "http://localhost:3009/",
+                    url: "http://localhost:3009/prof/login",
                     dataType: "json",
                     type: "GET",
                     data: param,
                     success: function (data) {
-
+                        console.log(data);
+                        if (data.length > 0) {
+                            // 로그인 성공
+                            alert(data[0].NAME + "님 환영합니다.")
+                            sessionStorage.setItem("sesstionId", data[0].USERID);
+                            sessionStorage.setItem("sesstionStatus", data[0].STATUS);
+                            location.href = "main.html";
+                        } else {
+                            // 로그인 실패
+                            alert("아이디/비밀번호를 확인해주세요.")
+                        }
                     }
                 });
             }

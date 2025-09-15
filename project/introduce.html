@@ -109,6 +109,85 @@
             font-size: 1.5rem;
             opacity: 0.8;
         }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: radial-gradient(circle at center, #1e1e1e, #000);
+            color: #fff;
+        }
+
+        /* 오버레이 */
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            backdrop-filter: blur(10px);
+            background-color: rgba(0, 0, 0, 0.6);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 999;
+            background-image: url('/img/run.jpg');
+            /* 이미지 파일명 맞게 수정 */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            
+        }
+
+        /* 모달 박스 */
+        .modal {
+            background-color: #2b2b2b;
+            padding: 30px 40px;
+            border-radius: 16px;
+            width: 90%;
+            max-width: 600px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+            position: relative;
+            animation: fadeInUp 0.5s ease;
+        }
+
+        @keyframes fadeInUp {
+            0% {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+
+            100% {
+                transform: translateY(0px);
+                opacity: 1;
+            }
+        }
+
+        /* 텍스트 스타일 */
+        .modal h2 {
+            margin-bottom: 20px;
+            font-size: 26px;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .modal section {
+            margin-bottom: 20px;
+        }
+
+        .modal h3 {
+            margin-bottom: 6px;
+            font-size: 18px;
+            color: #f1c40f;
+        }
+
+        .modal p {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #ccc;
+        }
     </style>
 </head>
 
@@ -133,16 +212,49 @@
                     <button v-if="!isLoggedIn" @click="login">LOGIN</button>
                     <button v-if="isLoggedIn" @click="logout">LOGOUT</button>
                 </div>
+
             </div>
         </header>
 
-        <!-- 메인 이미지 영역 -->
-        <section class="hero">
-            <div class="hero-text">
-                <h1>나만의 맞춤형 달리기를 해보자</h1>
-                <p>어디까지 달려 보셨습니까?</p>
+        <div class="overlay" v-if="showModal">
+            <div class="modal">
+                <h2>머신 러닝</h2>
+                <section>
+                    <h3>머신 러닝의 마법</h3>
+                    <p>
+                        M1 칩의 머신 러닝 기술이 Mac 안에 탑재된 가능성의 세계를 엽니다.
+                        핵심은 머신 러닝 기술을 활용해 방대한 데이터셋 기반으로 모델을 구축하고 적용할 수 있다는 점입니다.
+                    </p>
+                </section>
+
+                <section>
+                    <h3>16코어 Neural Engine</h3>
+                    <p>
+                        M1 칩에 내장된 16코어 Neural Engine은 초당 최대 11조 회의 연산을 수행합니다.
+                        Pro AI 앱으로 음성 인식, 스피치 분석, 스마트 기능이 가능해집니다.
+                    </p>
+                </section>
+
+                <section>
+                    <h3>머신 러닝 최적화</h3>
+                    <p>
+                        CPU, GPU, Neural Engine을 조화롭게 구성하여 각 ML 작업을 최적화합니다.
+                        실시간 데이터 분석에 탁월합니다.
+                    </p>
+                </section>
+
+                <section>
+                    <h3>ML 가속장치</h3>
+                    <p>
+                        고속 ML 전용 가속 장치는 초당 최대 1조 회 연산을 수행하며,
+                        모든 작업이 디바이스 내에서 처리되므로 개인 정보도 보호됩니다.
+                    </p>
+                </section>
             </div>
-        </section>
+        </div>
+    </div>
+
+    </section>
     </div>
     </div>
 </body>
@@ -154,7 +266,7 @@
         data() {
             return {
                 // 변수 - (key : value)
-
+                showModal: true
             };
         },
         methods: {
@@ -172,7 +284,10 @@
                     }
                 });
             },
-            
+            closeModal() {
+                this.showModal = false;
+            }
+
         }, // methods
         mounted() {
             // 처음 시작할 때 실행되는 부분

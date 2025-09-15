@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+
+        }
+
+        body,
+        html {
+            font-family: 'Segoe UI', sans-serif;
+            height: 100%;
+            background-image: url('/img/run2.jpg');
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+        }
+
+        /* 헤더 스타일 */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            z-index: 1000;
+
+
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 40px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        .sub {
+            font-size: 12px;
+            font-weight: normal;
+            color: #ccc;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav ul li {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li:hover {
+            color: #f8d800;
+        }
+
+        .auth button {
+            background: none;
+            border: 1px solid white;
+            color: white;
+            padding: 5px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .auth button:hover {
+            background-color: white;
+            color: rgb(255, 255, 255);
+        }
+
+        .container {
+            font-family: 'Noto Sans KR', sans-serif;
+            color: #ffffff;
+
+
+        }
+
+        .address {
+            font-size: 18px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: center;
+            /* 수평 가운데 정렬 */
+            align-items: center;
+            /* 수직 가운데 정렬 */
+            flex-wrap: wrap;
+            gap: 40px;
+            flex-direction: column;
+            /* 수직 정렬을 위한 방향 변경 */
+            text-align: center;
+            /* 텍스트 자체도 가운데 정렬 */
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        .icon {
+            font-size: 30px;
+
+        }
+
+        .highlight {
+            color: #f15849;
+        }
+
+        hr {
+            margin: 20px 0;
+            border: 1px solid #ccc;
+        }
+
+        .content {
+            display: flex;
+            gap: 40px;
+            justify-content: center;
+            flex-wrap: wrap;
+
+        }
+
+        .bus-info,
+        .subway-info {
+            flex: 1 1 320px;
+            display: flex;
+            gap: 16px;
+            align-items: flex-start;
+
+
+
+        }
+
+        .icon-circle {
+            border: 2px solid #0078ff;
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 26px;
+            color: #0078ff;
+            flex-shrink: 0;
+        }
+
+        h3 {
+            margin: 0 0 6px 0;
+            font-weight: 600;
+            font-size: 18px;
+        }
+
+        .sub {
+            font-size: 12px;
+            color: #ffffff;
+            margin-bottom: 6px;
+        }
+
+        .tag {
+            display: inline-block;
+            font-size: 13px;
+            font-weight: 600;
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: white;
+            margin-right: 4px;
+        }
+
+        .green {
+            background-color: #4caf50;
+        }
+
+        .blue {
+            background-color: #1565c0;
+        }
+
+        .red {
+            background-color: #d32f2f;
+        }
+
+        .note {
+            font-size: 12px;
+            color: #ffffff;
+            margin-top: 10px;
+        }
+
+        .highlight-small {
+            color: #f15849;
+            font-size: 13px;
+            margin-bottom: 10px;
+        }
+
+        .station-selector {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+
+        }
+
+        .station-btn {
+            background-color: #0078ff;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 15px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 14px;
+            opacity: 0.7;
+            transition: opacity 0.2s ease;
+        }
+
+        .station-btn.active {
+            opacity: 1;
+        }
+
+        .station-btn:hover:not(.active) {
+            opacity: 0.9;
+        }
+
+        .map-image {
+            max-width: 50%;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="app">
+        <!-- html 코드는 id가 app인 태그 안에서 꼭 작업-->
+        <header>
+            <div class="navbar">
+                <div class="logo">Run<br><span class="sub">러닝 1000만시대</span></div>
+                <nav>
+                    <ul>
+                        <li>사이트소개</li>
+                        <li>오시는길</li>
+                        <li>맞춤 추천</li>
+                        <li>게시판</li>
+                        <li>준비중</li>
+                        <li>준비중</li>
+                        <li>준비중</li>
+                    </ul>
+                </nav>
+                <div class="auth">
+                    <button v-if="!isLoggedIn" @click="login">LOGIN</button>
+                    <button v-if="isLoggedIn" @click="logout">LOGOUT</button>
+                </div>
+
+            </div>
+        </header>
+        <div class="container">
+            <div class="address">
+                <span class="icon">📍</span>
+                <span>
+                    <h2>인천시 부평구 경원대로 1366 <strong class="highlight">부평동, 스테이션타워 7F</strong></h2>
+                </span>
+            </div>
+            <div class="content">
+                <div class="bus-info">
+                    <div class="icon-circle">
+                        <i class="bus-icon">🚌</i>
+                    </div>
+                    <div>
+                        <h3>버스로 오시는 방법</h3>
+                        <p class="sub">부평역(40190), 부평역(대한극장)(40196)</p>
+                        <p>
+                            <span class="tag green">지선</span> 556(휴먼시아1단지) 557(부평시장(가구의거리)) 557A부평시장(가구의거리)
+                            570(부평시장(가구의거리)) 582(부평역)<br />
+                            <span class="tag blue">간선</span> 2(효성동동화운수차고지) 30(왕길동기점/종점) 34(휴먼시아1단지) 111-2(굴포천역(부평농협))
+                            112(동춘동차고지)<br />
+                            <span class="tag red">좌석</span> 111(왕산)
+                        </p>
+                        <p class="note">
+                            주변 정류장<br />
+                            부평역(40190), 부평역(대한극장)(40196)
+                        </p>
+                    </div>
+                </div>
+                <div class="subway-info">
+                    <div class="icon-circle">
+                        <i class="subway-icon">🚇</i>
+                    </div>
+                    <div>
+                        <h3>지하철로 오시는 방법</h3>
+                        <p class="highlight-small"> [1호선] 부평역 15번 출구 부평공원 방향 200m 직진</p>
+                        <div class="station-selector">
+                            <button class="station-btn">&lt; 부개</button>
+                            <button class="station-btn active">4 부평역</button>
+                            <button class="station-btn">역곡 &gt;</button>
+                        </div>
+                        <a href="https://map.naver.com/p/entry/place/1516930945?c=16.64,0,0,0,dh&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202509151407&locale=ko&svcName=map_pcv5"><img src="/img/map.jpg" alt="부평역" class="map-image" /></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
+
+<script>
+    const app = Vue.createApp({
+        data() {
+            return {
+                // 변수 - (key : value)
+
+            };
+        },
+        methods: {
+            // 함수(메소드) - (key : function())
+            fnUserList: function () {
+                let self = this;
+                let param = {};
+                $.ajax({
+                    url: "http://localhost:3009/",
+                    dataType: "json",
+                    type: "GET",
+                    data: param,
+                    success: function (data) {
+
+                    }
+                });
+            },
+    
+
+        }, // methods
+        mounted() {
+            // 처음 시작할 때 실행되는 부분
+            let self = this;
+        }
+    });
+
+    app.mount('#app');
+</script>

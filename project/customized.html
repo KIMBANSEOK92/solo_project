@@ -19,6 +19,8 @@
         html {
             font-family: 'Segoe UI', sans-serif;
             height: 100%;
+            
+            
         }
 
         /* 헤더 스타일 */
@@ -80,35 +82,6 @@
             background-color: white;
             color: black;
         }
-
-        /* Hero 이미지 영역 */
-        .hero {
-            background-image: url('/img/main1.jpg');
-            /* 이미지 파일명 맞게 수정 */
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero-text {
-            color: white;
-            text-align: center;
-            text-shadow: 1px 1px 5px black;
-        }
-
-        .hero-text h1 {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .hero-text p {
-            font-size: 1.5rem;
-            opacity: 0.8;
-        }
     </style>
 </head>
 
@@ -136,14 +109,6 @@
             </div>
         </header>
 
-        <!-- 메인 이미지 영역 -->
-        <section class="hero">
-            <div class="hero-text">
-                <h1>나만의 맞춤형 달리기를 해보자</h1>
-                <p>어디까지 달려 보셨습니까?</p>
-            </div>
-        </section>
-    </div>
     </div>
 </body>
 
@@ -172,7 +137,7 @@
                     }
                 });
             },
-            
+
         }, // methods
         mounted() {
             // 처음 시작할 때 실행되는 부분
