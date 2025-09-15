@@ -101,7 +101,7 @@
 
         .address {
             font-size: 18px;
-            margin-bottom: 10px;
+            margin-bottom: 5px;
             display: flex;
             justify-content: center;
             /* 수평 가운데 정렬 */
@@ -137,6 +137,7 @@
             justify-content: center;
             flex-wrap: wrap;
 
+
         }
 
         .bus-info,
@@ -144,8 +145,16 @@
             flex: 1 1 320px;
             display: flex;
             gap: 16px;
-            align-items: flex-start;
-
+            justify-content: center;
+            /* 수평 가운데 정렬 */
+            align-items: center;
+            /* 수직 가운데 정렬 */
+            flex-wrap: wrap;
+            flex-direction: column;
+            /* 수직 정렬을 위한 방향 변경 */
+            text-align: center;
+            /* 텍스트 자체도 가운데 정렬 */
+            box-sizing: border-box;
 
 
         }
@@ -207,34 +216,6 @@
             color: #f15849;
             font-size: 13px;
             margin-bottom: 10px;
-        }
-
-        .station-selector {
-            display: flex;
-            gap: 8px;
-            margin-bottom: 10px;
-
-        }
-
-        .station-btn {
-            background-color: #0078ff;
-            color: white;
-            border: none;
-            padding: 6px 14px;
-            border-radius: 15px;
-            cursor: pointer;
-            font-weight: 600;
-            font-size: 14px;
-            opacity: 0.7;
-            transition: opacity 0.2s ease;
-        }
-
-        .station-btn.active {
-            opacity: 1;
-        }
-
-        .station-btn:hover:not(.active) {
-            opacity: 0.9;
         }
 
         .map-image {
@@ -303,12 +284,9 @@
                     <div>
                         <h3>지하철로 오시는 방법</h3>
                         <p class="highlight-small"> [1호선] 부평역 15번 출구 부평공원 방향 200m 직진</p>
-                        <div class="station-selector">
-                            <button class="station-btn">&lt; 부개</button>
-                            <button class="station-btn active">4 부평역</button>
-                            <button class="station-btn">역곡 &gt;</button>
-                        </div>
-                        <a href="https://map.naver.com/p/entry/place/1516930945?c=16.64,0,0,0,dh&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202509151407&locale=ko&svcName=map_pcv5"><img src="/img/map.jpg" alt="부평역" class="map-image" /></a>
+                        <a
+                            href="https://map.naver.com/p/entry/place/1516930945?c=16.64,0,0,0,dh&placePath=/home?from=map&fromPanelNum=1&additionalHeight=76&timestamp=202509151407&locale=ko&svcName=map_pcv5"><img
+                                src="/img/map.jpg" alt="부평역" class="map-image" /></a>
                     </div>
                 </div>
             </div>
@@ -341,7 +319,7 @@
                     }
                 });
             },
-    
+
 
         }, // methods
         mounted() {
