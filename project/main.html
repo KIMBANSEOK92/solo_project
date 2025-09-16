@@ -13,12 +13,14 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        body,
-        html {
-            font-family: 'Segoe UI', sans-serif;
-            height: 100%;
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+
         }
 
         /* 헤더 스타일 */
@@ -48,7 +50,7 @@
         .sub {
             font-size: 12px;
             font-weight: normal;
-            color: #ccc;
+            color: #ffffff;
         }
 
         nav ul {
@@ -62,7 +64,7 @@
             transition: color 0.3s ease;
         }
 
-        nav ul li:hover {
+        nav  ul li:hover {
             color: #f8d800;
         }
 
@@ -111,9 +113,10 @@
         }
 
         a {
-            color: white;
+            color: rgb(255, 255, 255);
             text-decoration: none;
         }
+
     </style>
 </head>
 
@@ -159,7 +162,7 @@
         data() {
             return {
                 // 변수 - (key : value)
-
+                isLoggedIn: false
             };
         },
         methods: {
@@ -177,7 +180,19 @@
                     }
                 });
             },
-
+            logout: function () {
+                sessionStorage.clear();
+                this.isLoggedIn = false;
+                alert("로그아웃 되었습니다.");
+            },
+            checkLoginStatus: function () {
+                const sessionId = sessionStorage.getItem("sesstionId");
+                if (sessionId) {
+                    this.isLoggedIn = true;
+                } else {
+                    this.isLoggedIn = false;
+                }
+            }
         }, // methods
         mounted() {
             // 처음 시작할 때 실행되는 부분

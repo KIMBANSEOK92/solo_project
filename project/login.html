@@ -1,15 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-<template>
-  <div class="logo-wrapper">
-    <h1 class="logo">
-      <span v-for="(char, index) in letters" :key="index" class="letter"
-        :style="{ animationDelay: `${index * 0.15}s` }">
-        {{ char }}
-      </span>
-    </h1>
-  </div>
-</template>
 
 <head>
   <meta charset="UTF-8">
@@ -193,7 +183,7 @@
     }
 
     a {
-      color: white;
+      color: rgb(255, 255, 255);
       text-decoration: none;
     }
   </style>
@@ -221,8 +211,6 @@
     </div>
   </header>
   <div id="app">
-    <!-- 실시간 날짜 목록 -->
-
     <div class="login_container">
       <form>
         <label for="username">ID</label>
@@ -231,7 +219,7 @@
         <label for="password">PASSWORD</label>
         <input type="password" id="password" v-model="pwd" placeholder="비밀번호를 입력해주세요" />
 
-        <button class="button" @click="fnLogin">로그인</button>
+        <button class="button" @click.prevent="fnLogin">로그인</button>
         <div class="forgot_create"><a href="join.html">회원가입</a></div>
         <div class="forgot_password"><a href="forget.html">비밀번호를 잊어버리셨나요?</a></div>
 
@@ -246,20 +234,20 @@
       return {
         // 변수 - (key : value)
         userId: "",
-        pwd: ""
+        pwd: "",
+        isLoggedIn: false
       };
     },
     methods: {
       // 함수(메소드) - (key : function())
       fnLogin: function () {
         let self = this;
-        let userId = this;
         let param = {
           userId: self.userId,
           pwd: self.pwd
         };
         $.ajax({
-          url: "http://localhost:3009/prof/login",
+          url: "http://localhost:3009/login",
           dataType: "json",
           type: "GET",
           data: param,
@@ -275,19 +263,27 @@
               // 로그인 실패
               alert("아이디/비밀번호를 확인해주세요.")
             }
+
           }
         });
       },
-      forgot_create: function () {
-        let self = this;
-        let param = {
-
+      logout: function () {
+        sessionStorage.clear();
+        this.isLoggedIn = false;
+        alert("로그아웃 되었습니다.");
+      },
+      checkLoginStatus: function () {
+        const sessionId = sessionStorage.getItem("sesstionId");
+        if (sessionId) {
+          this.isLoggedIn = true;
+        } else {
+          this.isLoggedIn = false;
         }
       }
     }, // methods
     mounted() {
-      // 처음 시작할 때 실행되는 부분
-      let self = this;
+      // 페이지 로드 시 로그인 상태 확인
+      this.checkLoginStatus();
     }
   });
 
