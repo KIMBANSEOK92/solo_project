@@ -35,9 +35,11 @@
             display: flex;
             justify-content: center;
             align-items: center;
+            font-family: 'Segoe UI', sans-serif;
+
         }
 
-        .login-container {
+        .login_container {
             background: rgba(0, 0, 0, 0.6);
             padding: 40px 30px;
             width: 360px;
@@ -47,7 +49,7 @@
             box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
         }
 
-        .login-container h1 {
+        .login_container h1 {
             margin-bottom: 30px;
             font-weight: 700;
             font-size: 28px;
@@ -87,7 +89,7 @@
             border-color: #60a5fa;
         }
 
-        button {
+        .button {
             width: 100%;
             background-color: #2563eb;
             border: none;
@@ -105,7 +107,7 @@
             background-color: #1d4ed8;
         }
 
-        .forgot-password {
+        .forgot_password {
             font-size: 14px;
             color: #9ca3af;
             cursor: pointer;
@@ -113,7 +115,7 @@
             user-select: none;
         }
 
-        .forgot-create {
+        .forgot_create {
             font-size: 14px;
             color: #9ca3af;
             cursor: pointer;
@@ -122,21 +124,106 @@
             margin: 5px;
         }
 
-        .forgot-password:hover {
+        .forgot_password:hover {
             color: #60a5fa;
         }
 
-        .forgot-create:hover {
+        .forgot_create:hover {
             color: #60a5fa;
+        }
+
+        /* 헤더 스타일 */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            z-index: 1000;
+        }
+
+        .navbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 40px;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            text-align: left;
+            line-height: 1.2;
+        }
+
+        .sub {
+            font-size: 12px;
+            font-weight: normal;
+            color: #ccc;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+        }
+
+        nav ul li {
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        nav ul li:hover {
+            color: #f8d800;
+        }
+
+        .auth button {
+            background: none;
+            border: 1px solid white;
+            color: white;
+            padding: 5px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+        }
+
+        .auth button:hover {
+            background-color: white;
+            color: black;
+        }
+
+        a {
+            color: white;
+            text-decoration: none;
         }
     </style>
 </head>
 
 <body>
+    <header>
+        <div class="navbar">
+            <div class="logo"><a href="main.html">Run</a><br><span class="sub">러닝 1000만시대</span></div>
+            <nav>
+                <ul>
+                    <li><a href="introduce.html">사이트소개</a></li>
+                    <li><a href="addr.html">오시는길</a></li>
+                    <li><a href="customized.html">맞춤 추천</a></li>
+                    <li><a href="list.html">게시판</a></li>
+                    <li>준비중</li>
+                    <li>준비중</li>
+                    <li>준비중</li>
+                </ul>
+            </nav>
+            <div class="auth">
+                <button v-if="!isLoggedIn"><a href="login.html">LOGIN</a></button>
+                <button v-if="isLoggedIn" @click="logout" disabled>LOGOUT</button>
+            </div>
+        </div>
+    </header>
     <div id="app">
         <!-- 실시간 날짜 목록 -->
 
-        <div class="login-container">
+        <div class="login_container">
             <form>
                 <label for="username">ID</label>
                 <input type="text" id="userId" v-model="userId" placeholder="아이디를 입력해주세요" />
@@ -144,9 +231,9 @@
                 <label for="password">PASSWORD</label>
                 <input type="password" id="password" v-model="pwd" placeholder="비밀번호를 입력해주세요" />
 
-                <button @click="fnLogin">로그인</button>
-                <div class="forgot-create">회원가입</div>
-                <div class="forgot-password">비밀번호를 잊어버리셨나요?</div>
+                <button class="button" @click="fnLogin">로그인</button>
+                <div class="forgot_create">회원가입</div>
+                <div class="forgot_password">비밀번호를 잊어버리셨나요?</div>
 
             </form>
         </div>
@@ -190,6 +277,12 @@
                         }
                     }
                 });
+            },
+            forgot_create: function () {
+                let self = this;
+                let param = {
+
+                }
             }
         }, // methods
         mounted() {

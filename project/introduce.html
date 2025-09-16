@@ -188,6 +188,11 @@
             line-height: 1.6;
             color: #ccc;
         }
+
+        a {
+            color: white;
+            text-decoration: none;
+        }
     </style>
 </head>
 
@@ -196,25 +201,25 @@
         <!-- html 코드는 id가 app인 태그 안에서 꼭 작업-->
         <header>
             <div class="navbar">
-                <div class="logo">Run<br><span class="sub">러닝 1000만시대</span></div>
+                <div class="logo"><a href="main.html">Run</a><br><span class="sub">러닝 1000만시대</span></div>
                 <nav>
                     <ul>
-                        <li>사이트소개</li>
-                        <li>오시는길</li>
-                        <li>맞춤 추천</li>
-                        <li>게시판</li>
+                        <li><a href="introduce.html">사이트소개</a></li>
+                        <li><a href="addr.html">오시는길</a></li>
+                        <li><a href="customized.html">맞춤 추천</a></li>
+                        <li><a href="list.html">게시판</a></li>
                         <li>준비중</li>
                         <li>준비중</li>
                         <li>준비중</li>
                     </ul>
                 </nav>
                 <div class="auth">
-                    <button v-if="!isLoggedIn" @click="login">LOGIN</button>
+                    <button v-if="!isLoggedIn"><a href="login.html">LOGIN</a></button>
                     <button v-if="isLoggedIn" @click="logout">LOGOUT</button>
                 </div>
-
             </div>
         </header>
+
 
         <div class="overlay" v-if="showModal">
             <div class="modal">
@@ -239,21 +244,21 @@
                 <section>
                     <h3>맞춤형 러닝 시스템이 제공하는 정보</h3>
                     <ul>
-                        개인별 체력과 목표에 따른 맞춤 트레이닝 프로그램
+                        <li>개인별 체력과 목표에 따른 맞춤 트레이닝 프로그램
 
-                        발 모양, 체중, 러닝 스타일에 맞춘 신발 추천
+                            발 모양, 체중, 러닝 스타일에 맞춘 신발 추천
 
-                        부상 예방을 위한 자세 교정 및 스트레칭 가이드
+                            부상 예방을 위한 자세 교정 및 스트레칭 가이드
 
-                        실시간 러닝 데이터 분석 및 피드백 제공
+                            실시간 러닝 데이터 분석 및 피드백 제공</li>
                     </ul>
                 </section>
 
                 <section>
                     <h3>관리자의 한마디</h3>
                     <ul>
-                        맞춤형 러닝 시스템은 개인의 러닝 스타일, 체력 수준, 목표에 최적화된 트레이닝 계획과 장비 추천을 통해 러닝 경험을 한 단계 업그레이드하고,
-                        초보자부터 전문 러너까지 누구나 자신에게 딱 맞는 러닝 프로그램을 통해 부상의 위험을 줄이고 꾸준한 성장을 돕고 싶은 마음에 만들게 되었습니다.
+                        <li>맞춤형 러닝 시스템은 개인의 러닝 스타일, 체력 수준, 목표에 최적화된 트레이닝 계획과 장비 추천을 통해 러닝 경험을 한 단계 업그레이드하고,
+                            초보자부터 전문 러너까지 누구나 자신에게 딱 맞는 러닝 프로그램을 통해 부상의 위험을 줄이고 꾸준한 성장을 돕고 싶은 마음에 만들게 되었습니다.</li>
                     </ul>
                 </section>
             </div>

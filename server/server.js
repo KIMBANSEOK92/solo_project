@@ -97,7 +97,7 @@ app.get('/stu/insert', async (req, res) => {
 });
 app.get('prof/login', async (req, res) => {
   const { userId, pwd } = req.query;
-  let query = `SELECT * FROM ESERCISE WHERE USERID = :userId AND PASSWORD = :pwd `;
+  let query = `SELECT * FROM ESERCISE WHERE USERID =  '${userId}' AND PASSWORD = '${pwd}' `;
   try {
     const result = await connection.execute(query);
     const columnNames = result.metaData.map(column => column.name);
@@ -116,7 +116,8 @@ app.get('prof/login', async (req, res) => {
     console.error('Error executing query', error);
     res.status(500).send('Error executing query');
   }
-  });
+});
+
 // 서버 시작
 app.listen(3009, () => {
   console.log('Server is running on port 3009');
