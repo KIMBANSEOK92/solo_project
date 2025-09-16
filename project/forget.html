@@ -21,7 +21,6 @@
         body,
         html {
             margin: 0;
-            background-image: image("img/poto.jpg");
             font-family: 'Noto Sans KR', sans-serif;
             color: #333;
             font-family: 'Segoe UI', sans-serif;
@@ -31,7 +30,7 @@
 
         .container {
             max-width: 900px;
-            margin: 50px auto;
+            margin: 100px auto;
             background-color: #fff;
             border-radius: 20px;
             padding: 40px 50px;
@@ -39,22 +38,22 @@
         }
 
         .signup-box {
-            max-width: 350px;
+            max-width: 470px;
             margin: 0 auto;
-            padding: 40px 40px 50px;
+            padding: 100px 50px 200px;
             border-radius: 20px;
             background-color: #fff;
             box-shadow: 0 0 5px #110a30;
         }
 
         .signup-box h2 {
-            font-weight: 700;
-            font-size: 16px;
-            margin-bottom: 8px;
+            font-weight: 1000;
+            font-size: 30px;
+            margin-bottom: 30px;
         }
 
         .signup-box p.desc {
-            font-size: 12px;
+            font-size: 15px;
             margin-bottom: 20px;
             color: #666;
         }
@@ -81,22 +80,11 @@
             border: none;
             color: white;
             padding: 0 12px;
-            font-size: 11px;
-            height: 36px;
+            font-size: 15px;
+            height: 40px;
             border-radius: 6px;
             cursor: pointer;
-            margin-left: 5px;
-        }
-
-        .id-row {
-            display: flex;
-            gap: 5px;
-            margin-bottom: 5px;
-        }
-
-        .id-row input {
-            flex-grow: 1;
-            margin-bottom: 0;
+            margin-left: 8px;
         }
 
         .error-msg {
@@ -237,41 +225,9 @@
 
         <div class="container">
             <div class="signup-box">
-                <h2>회원가입</h2>
-                <p class="desc">가입을 통해 더 다양한 서비스를 만나보세요!</p>
+                <h2>계정 찾기</h2>
+                <p class="desc">전화번호 또는 복구 이메일을 입력하세요.</p>
                 <form>
-                    <div class="id-row">
-                        <input type="text" placeholder="아이디 입력 (6~20자)" />
-                        <button type="button" class="check-btn">중복 확인</button>
-                    </div>
-                    <div class="error-msg">사용할 수 없는 아이디입니다</div>
-
-                    <input type="password" placeholder="비밀번호 입력 (문자, 숫자, 특수문자 포함 8~20자)" />
-                    <div class="error-msg" style="margin-top: 3px;">20자 이내 비밀번호를 입력해주세요</div>
-
-                    <input type="password" placeholder="비밀번호 재입력" />
-                    <div class="error-msg" style="margin-top: 3px;">비밀번호가 일치하지 않습니다</div>
-
-                    <input type="text" placeholder="이름을 입력" />
-                    <div class="error-msg" style="margin-top: 3px;">본인의 이름을 입력해주세요</div>
-                    <div class="form-title">성별 선택</div>
-                    <div class="form-group">
-                        <div class="gender-options">
-                            <label class="gender-radio" :class="{ selected: gender === 'M' }">
-                                <input type="radio" value="M" v-model="gender" />
-                                남성
-                            </label>
-                            <label class="gender-radio" :class="{ selected: gender === 'F' }">
-                                <input type="radio" value="F" v-model="gender" />
-                                여성
-                            </label>
-                        </div>
-                        <div class="selected-value">
-                            선택한 성별:
-                            <strong>{{ gender === 'M' ? '남성' : gender === 'F' ? '여성' : '선택 안됨' }}</strong>
-                        </div>
-                    </div>
-
                     <div class="email-row">
                         <input type="text" placeholder="이메일 주소" />
                         <span>@</span>
@@ -283,7 +239,7 @@
                             <option>facebook.com</option>
                         </select>
                     </div>
-
+                    <input type="text" class="phone" placeholder="휴대폰 번호 입력 ('-' 제외 11자리 입력)" />
                     <div class="dob-row">
                         <select v-model="birthYear">
                             <option disabled value="">년도</option>
@@ -300,10 +256,7 @@
                             <option v-for="day in days" :key="day" :value="day">{{ day }}</option>
                         </select>
                     </div>
-
-                    <input type="text" class="phone" placeholder="휴대폰 번호 입력 ('-' 제외 11자리 입력)" />
-
-                    <button type="submit" class="submit-btn">가입하기</button>
+                    <button type="submit" class="submit-btn">다음</button>
                 </form>
             </div>
         </div>
@@ -334,7 +287,7 @@
                 $.ajax({
                     url: "http://localhost:3009/",
                     dataType: "json",
-                    type: "POST",
+                    type: "GET",
                     data: param,
                     success: function (data) {
 

@@ -95,27 +95,27 @@ app.get('/stu/insert', async (req, res) => {
     res.status(500).send('Error executing insert');
   }
 });
-app.get('prof/login', async (req, res) => {
+app.get('/prof/login', (req, res) => {
   const { userId, pwd } = req.query;
-  let query = `SELECT * FROM ESERCISE WHERE USERID =  '${userId}' AND PASSWORD = '${pwd}' `;
-  try {
-    const result = await connection.execute(query);
-    const columnNames = result.metaData.map(column => column.name);
 
-    // 쿼리 결과를 JSON 형태로 변환
-    const rows = result.rows.map(row => {
-      // 각 행의 데이터를 컬럼명에 맞게 매핑하여 JSON 객체로 변환
-      const obj = {};
-      columnNames.forEach((columnName, index) => {
-        obj[columnName] = row[index];
-      });
-      return obj;
-    });
-    res.json(rows);
-  } catch (error) {
-    console.error('Error executing query', error);
-    res.status(500).send('Error executing query');
-  }
+  const sql = 'SELECT * FROM ESERCISE WHERE userid = ? AND password = ?';
+  db.query(sql, [userId, pwd], (err, results) => {
+    if (err) {
+      console.error('쿼리 오류:', err);
+      return res.status(500).json({ message: '서버 오류' });
+    }
+
+    if (results.length > 0) {
+      const user = results[0];
+      res.json([{
+        USERID: user.userid,
+        NAME: user.name,
+        STATUS: user.status
+      }]);
+    } else {
+      res.json([]);
+    }
+  });
 });
 
 // 서버 시작

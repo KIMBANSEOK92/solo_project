@@ -1,295 +1,295 @@
 <!DOCTYPE html>
 <html lang="en">
 <template>
-    <div class="logo-wrapper">
-        <h1 class="logo">
-            <span v-for="(char, index) in letters" :key="index" class="letter"
-                :style="{ animationDelay: `${index * 0.15}s` }">
-                {{ char }}
-            </span>
-        </h1>
-    </div>
+  <div class="logo-wrapper">
+    <h1 class="logo">
+      <span v-for="(char, index) in letters" :key="index" class="letter"
+        :style="{ animationDelay: `${index * 0.15}s` }">
+        {{ char }}
+      </span>
+    </h1>
+  </div>
 </template>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
-    <style>
-        /* Reset */
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
+  <style>
+    /* Reset */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-        body,
-        html {
-            height: 100%;
-            background: url('/img/run1.jpg') no-repeat center center fixed;
-            background-size: cover;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            font-family: 'Segoe UI', sans-serif;
+    body,
+    html {
+      height: 100%;
+      background: url('/img/run1.jpg') no-repeat center center fixed;
+      background-size: cover;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-family: 'Segoe UI', sans-serif;
 
-        }
+    }
 
-        .login_container {
-            background: rgba(0, 0, 0, 0.6);
-            padding: 40px 30px;
-            width: 360px;
-            border-radius: 10px;
-            color: white;
-            text-align: center;
-            box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
-        }
+    .login_container {
+      background: rgba(0, 0, 0, 0.6);
+      padding: 40px 30px;
+      width: 360px;
+      border-radius: 10px;
+      color: white;
+      text-align: center;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.8);
+    }
 
-        .login_container h1 {
-            margin-bottom: 30px;
-            font-weight: 700;
-            font-size: 28px;
-        }
+    .login_container h1 {
+      margin-bottom: 30px;
+      font-weight: 700;
+      font-size: 28px;
+    }
 
-        label {
-            display: block;
-            text-align: left;
-            font-size: 12px;
-            color: #3b82f6;
-            margin-bottom: 6px;
-            font-weight: 600;
-            letter-spacing: 0.05em;
-        }
+    label {
+      display: block;
+      text-align: left;
+      font-size: 12px;
+      color: #3b82f6;
+      margin-bottom: 6px;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
 
-        input[type="text"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px 8px;
-            font-size: 16px;
-            color: white;
-            background: transparent;
-            border: none;
-            border-bottom: 2px solid #3b82f6;
-            margin-bottom: 25px;
-            outline: none;
-            transition: border-color 0.3s;
-        }
+    input[type="text"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 8px;
+      font-size: 16px;
+      color: white;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid #3b82f6;
+      margin-bottom: 25px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
 
-        input[type="text"]::placeholder,
-        input[type="password"]::placeholder {
-            color: rgba(255, 255, 255, 0.6);
-        }
+    input[type="text"]::placeholder,
+    input[type="password"]::placeholder {
+      color: rgba(255, 255, 255, 0.6);
+    }
 
-        input[type="text"]:focus,
-        input[type="password"]:focus {
-            border-color: #60a5fa;
-        }
+    input[type="text"]:focus,
+    input[type="password"]:focus {
+      border-color: #60a5fa;
+    }
 
-        .button {
-            width: 100%;
-            background-color: #2563eb;
-            border: none;
-            padding: 14px 0;
-            color: white;
-            font-weight: 700;
-            font-size: 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.3s;
-            margin-bottom: 20px;
-        }
+    .button {
+      width: 100%;
+      background-color: #2563eb;
+      border: none;
+      padding: 14px 0;
+      color: white;
+      font-weight: 700;
+      font-size: 16px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      margin-bottom: 20px;
+    }
 
-        button:hover {
-            background-color: #1d4ed8;
-        }
+    button:hover {
+      background-color: #1d4ed8;
+    }
 
-        .forgot_password {
-            font-size: 14px;
-            color: #9ca3af;
-            cursor: pointer;
-            text-decoration: underline;
-            user-select: none;
-        }
+    .forgot_password {
+      font-size: 14px;
+      color: #9ca3af;
+      cursor: pointer;
+      text-decoration: underline;
+      user-select: none;
+    }
 
-        .forgot_create {
-            font-size: 14px;
-            color: #9ca3af;
-            cursor: pointer;
-            text-decoration: underline;
-            user-select: none;
-            margin: 5px;
-        }
+    .forgot_create {
+      font-size: 14px;
+      color: #9ca3af;
+      cursor: pointer;
+      text-decoration: underline;
+      user-select: none;
+      margin: 5px;
+    }
 
-        .forgot_password:hover {
-            color: #60a5fa;
-        }
+    .forgot_password:hover {
+      color: #60a5fa;
+    }
 
-        .forgot_create:hover {
-            color: #60a5fa;
-        }
+    .forgot_create:hover {
+      color: #60a5fa;
+    }
 
-        /* 헤더 스타일 */
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            z-index: 1000;
-        }
+    /* 헤더 스타일 */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      z-index: 1000;
+    }
 
-        .navbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 15px 40px;
-        }
+    .navbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 40px;
+    }
 
-        .logo {
-            font-size: 20px;
-            font-weight: bold;
-            text-align: left;
-            line-height: 1.2;
-        }
+    .logo {
+      font-size: 20px;
+      font-weight: bold;
+      text-align: left;
+      line-height: 1.2;
+    }
 
-        .sub {
-            font-size: 12px;
-            font-weight: normal;
-            color: #ccc;
-        }
+    .sub {
+      font-size: 12px;
+      font-weight: normal;
+      color: #ccc;
+    }
 
-        nav ul {
-            display: flex;
-            list-style: none;
-            gap: 25px;
-        }
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 25px;
+    }
 
-        nav ul li {
-            cursor: pointer;
-            transition: color 0.3s ease;
-        }
+    nav ul li {
+      cursor: pointer;
+      transition: color 0.3s ease;
+    }
 
-        nav ul li:hover {
-            color: #f8d800;
-        }
+    nav ul li:hover {
+      color: #f8d800;
+    }
 
-        .auth button {
-            background: none;
-            border: 1px solid white;
-            color: white;
-            padding: 5px 15px;
-            cursor: pointer;
-            border-radius: 5px;
-            transition: all 0.3s ease;
-        }
+    .auth button {
+      background: none;
+      border: 1px solid white;
+      color: white;
+      padding: 5px 15px;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
 
-        .auth button:hover {
-            background-color: white;
-            color: black;
-        }
+    .auth button:hover {
+      background-color: white;
+      color: black;
+    }
 
-        a {
-            color: white;
-            text-decoration: none;
-        }
-    </style>
+    a {
+      color: white;
+      text-decoration: none;
+    }
+  </style>
 </head>
 
 <body>
-    <header>
-        <div class="navbar">
-            <div class="logo"><a href="main.html">Run</a><br><span class="sub">러닝 1000만시대</span></div>
-            <nav>
-                <ul>
-                    <li><a href="introduce.html">사이트소개</a></li>
-                    <li><a href="addr.html">오시는길</a></li>
-                    <li><a href="customized.html">맞춤 추천</a></li>
-                    <li><a href="list.html">게시판</a></li>
-                    <li>준비중</li>
-                    <li>준비중</li>
-                    <li>준비중</li>
-                </ul>
-            </nav>
-            <div class="auth">
-                <button v-if="!isLoggedIn"><a href="login.html">LOGIN</a></button>
-                <button v-if="isLoggedIn" @click="logout" disabled>LOGOUT</button>
-            </div>
-        </div>
-    </header>
-    <div id="app">
-        <!-- 실시간 날짜 목록 -->
+  <header>
+    <div class="navbar">
+      <div class="logo"><a href="main.html">Run</a><br><span class="sub">러닝 1000만시대</span></div>
+      <nav>
+        <ul>
+          <li><a href="introduce.html">사이트소개</a></li>
+          <li><a href="addr.html">오시는길</a></li>
+          <li><a href="customized.html">맞춤 추천</a></li>
+          <li><a href="list.html">게시판</a></li>
+          <li>준비중</li>
+          <li>준비중</li>
+          <li>준비중</li>
+        </ul>
+      </nav>
+      <div class="auth">
+        <button v-if="!isLoggedIn"><a href="login.html">LOGIN</a></button>
+        <button v-if="isLoggedIn" @click="logout" disabled>LOGOUT</button>
+      </div>
+    </div>
+  </header>
+  <div id="app">
+    <!-- 실시간 날짜 목록 -->
 
-        <div class="login_container">
-            <form>
-                <label for="username">ID</label>
-                <input type="text" id="userId" v-model="userId" placeholder="아이디를 입력해주세요" />
+    <div class="login_container">
+      <form>
+        <label for="username">ID</label>
+        <input type="text" id="userId" v-model="userId" placeholder="아이디를 입력해주세요" />
 
-                <label for="password">PASSWORD</label>
-                <input type="password" id="password" v-model="pwd" placeholder="비밀번호를 입력해주세요" />
+        <label for="password">PASSWORD</label>
+        <input type="password" id="password" v-model="pwd" placeholder="비밀번호를 입력해주세요" />
 
-                <button class="button" @click="fnLogin">로그인</button>
-                <div class="forgot_create">회원가입</div>
-                <div class="forgot_password">비밀번호를 잊어버리셨나요?</div>
+        <button class="button" @click="fnLogin">로그인</button>
+        <div class="forgot_create"><a href="join.html">회원가입</a></div>
+        <div class="forgot_password"><a href="forget.html">비밀번호를 잊어버리셨나요?</a></div>
 
-            </form>
-        </div>
+      </form>
+    </div>
 </body>
 
 </html>
 <script>
-    const app = Vue.createApp({
-        data() {
-            return {
-                // 변수 - (key : value)
-                userId: "",
-                pwd: ""
-            };
-        },
-        methods: {
-            // 함수(메소드) - (key : function())
-            fnLogin: function () {
-                let self = this;
-                let userId = this;
-                let param = {
-                    userId: self.userId,
-                    pwd: self.pwd
-                };
-                $.ajax({
-                    url: "http://localhost:3009/prof/login",
-                    dataType: "json",
-                    type: "GET",
-                    data: param,
-                    success: function (data) {
-                        console.log(data);
-                        if (data.length > 0) {
-                            // 로그인 성공
-                            alert(data[0].NAME + "님 환영합니다.")
-                            sessionStorage.setItem("sesstionId", data[0].USERID);
-                            sessionStorage.setItem("sesstionStatus", data[0].STATUS);
-                            location.href = "main.html";
-                        } else {
-                            // 로그인 실패
-                            alert("아이디/비밀번호를 확인해주세요.")
-                        }
-                    }
-                });
-            },
-            forgot_create: function () {
-                let self = this;
-                let param = {
-
-                }
+  const app = Vue.createApp({
+    data() {
+      return {
+        // 변수 - (key : value)
+        userId: "",
+        pwd: ""
+      };
+    },
+    methods: {
+      // 함수(메소드) - (key : function())
+      fnLogin: function () {
+        let self = this;
+        let userId = this;
+        let param = {
+          userId: self.userId,
+          pwd: self.pwd
+        };
+        $.ajax({
+          url: "http://localhost:3009/prof/login",
+          dataType: "json",
+          type: "GET",
+          data: param,
+          success: function (data) {
+            console.log(data);
+            if (data.length > 0) {
+              // 로그인 성공
+              alert(data[0].NAME + "님 환영합니다.")
+              sessionStorage.setItem("sesstionId", data[0].USERID);
+              sessionStorage.setItem("sesstionStatus", data[0].STATUS);
+              location.href = "main.html";
+            } else {
+              // 로그인 실패
+              alert("아이디/비밀번호를 확인해주세요.")
             }
-        }, // methods
-        mounted() {
-            // 처음 시작할 때 실행되는 부분
-            let self = this;
-        }
-    });
+          }
+        });
+      },
+      forgot_create: function () {
+        let self = this;
+        let param = {
 
-    app.mount('#app');
+        }
+      }
+    }, // methods
+    mounted() {
+      // 처음 시작할 때 실행되는 부분
+      let self = this;
+    }
+  });
+
+  app.mount('#app');
 </script>
