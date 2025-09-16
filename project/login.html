@@ -186,6 +186,7 @@
       color: rgb(255, 255, 255);
       text-decoration: none;
     }
+    
   </style>
 </head>
 
@@ -206,7 +207,6 @@
       </nav>
       <div class="auth">
         <button v-if="!isLoggedIn"><a href="login.html">LOGIN</a></button>
-        <button v-if="isLoggedIn" @click="logout" disabled>LOGOUT</button>
       </div>
     </div>
   </header>
@@ -232,19 +232,18 @@
   const app = Vue.createApp({
     data() {
       return {
-        // 변수 - (key : value)
         userId: "",
         pwd: "",
-        isLoggedIn: false
+        isLoggedIn: false // 로그인 상태를 추적하는 변수 추가
       };
     },
     methods: {
-      // 함수(메소드) - (key : function())
       fnLogin: function () {
         let self = this;
         let param = {
           userId: self.userId,
-          pwd: self.pwd
+          pwd: self.pwd,
+          isLoggedIn: false
         };
         $.ajax({
           url: "http://localhost:3009/login",
@@ -255,26 +254,30 @@
             console.log(data);
             if (data.length > 0) {
               // 로그인 성공
-              alert(data[0].NAME + "님 환영합니다.")
-              sessionStorage.setItem("sesstionId", data[0].USERID);
-              sessionStorage.setItem("sesstionStatus", data[0].STATUS);
+              alert(data[0].NAME + "님 환영합니다.");
+              // 세션 스토리지에 로그인 정보 저장
+              sessionStorage.setItem("sessionId", data[0].USERID);
+              // Vue 인스턴스의 isLoggedIn 상태 업데이트
+              self.isLoggedIn = true;
+              // 메인 페이지로 이동
               location.href = "main.html";
             } else {
               // 로그인 실패
-              alert("아이디/비밀번호를 확인해주세요.")
+              alert("아이디/비밀번호를 확인해주세요.");
             }
-
           }
         });
       },
+      // 로그아웃 메서드
       logout: function () {
-        sessionStorage.clear();
-        this.isLoggedIn = false;
+        sessionStorage.clear(); // 세션 스토리지의 모든 데이터 삭제
+        this.isLoggedIn = false; // 로그인 상태를 false로 변경
         alert("로그아웃 되었습니다.");
+        location.reload(); // 페이지 새로고침
       },
+      // 페이지 로드 시 로그인 상태를 확인하는 메서드
       checkLoginStatus: function () {
-        const sessionId = sessionStorage.getItem("sesstionId");
-        if (sessionId) {
+        if (sessionStorage.getItem("sessionId")) {
           this.isLoggedIn = true;
         } else {
           this.isLoggedIn = false;

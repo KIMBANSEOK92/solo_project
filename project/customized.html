@@ -85,6 +85,24 @@
             color: rgb(255, 255, 255);
             text-decoration: none;
         }
+
+        .auth .mypage-button {
+            background: none;
+            border: 1px solid white;
+            color: white;
+            padding: 5px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+
+
+
+        }
+
+        .auth .mypage-button:hover {
+            background-color: white;
+            color: black;
+        }
     </style>
 </head>
 
@@ -108,6 +126,9 @@
                 <div class="auth">
                     <button v-if="!isLoggedIn"><a href="login.html">LOGIN</a></button>
                     <button v-if="isLoggedIn" @click="logout">LOGOUT</button>
+                    <button v-if="isLoggedIn" class="mypage-button">
+                        <a href="mypage.html">마이페이지</a>
+                    </button>
                 </div>
             </div>
         </header>
@@ -121,7 +142,7 @@
         data() {
             return {
                 // 변수 - (key : value)
-
+                isLoggedIn: false
             };
         },
         methods: {
@@ -139,11 +160,26 @@
                     }
                 });
             },
+            logout: function () {
+                sessionStorage.clear(); // 세션 스토리지의 모든 데이터 삭제
+                this.isLoggedIn = false; // 로그인 상태를 false로 변경
+                alert("로그아웃 되었습니다.");
+                location.reload(); // 페이지 새로고침
+            },
+            // 페이지 로드 시 로그인 상태를 확인하는 메서드
+            checkLoginStatus: function () {
+                if (sessionStorage.getItem("sessionId")) {
+                    this.isLoggedIn = true;
+                } else {
+                    this.isLoggedIn = false;
+                }
+            }
 
         }, // methods
         mounted() {
             // 처음 시작할 때 실행되는 부분
             let self = this;
+            this.checkLoginStatus();
         }
     });
 

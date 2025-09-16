@@ -193,6 +193,22 @@
             color: rgb(255, 255, 255);
             text-decoration: none;
         }
+
+        .auth .mypage-button {
+            background: none;
+            border: 1px solid white;
+            color: white;
+            padding: 5px 15px;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: all 0.3s ease;
+
+        }
+
+        .auth .mypage-button:hover {
+            background-color: white;
+            color: black;
+        }
     </style>
 </head>
 
@@ -216,53 +232,57 @@
                 <div class="auth">
                     <button v-if="!isLoggedIn"><a href="login.html">LOGIN</a></button>
                     <button v-if="isLoggedIn" @click="logout">LOGOUT</button>
+                    <button v-if="isLoggedIn" class="mypage-button">
+                        <a href="mypage.html">마이페이지</a>
+                    </button>
                 </div>
             </div>
-        </header>
+    </div>
+    </header>
 
 
-        <div class="overlay" v-if="showModal">
-            <div class="modal">
-                <h2>Run 사이트 소개</h2>
-                <section>
-                    <h3>러닝의 주요 장점</h3>
-                    <ul>
-                        <li>심폐 기능 강화
-                            지속적인 러닝은 심장과 폐의 기능을 향상시켜 전반적인 체력 증가에 도움을 줍니다.</li>
+    <div class="overlay" v-if="showModal">
+        <div class="modal">
+            <h2>Run 사이트 소개</h2>
+            <section>
+                <h3>러닝의 주요 장점</h3>
+                <ul>
+                    <li>심폐 기능 강화
+                        지속적인 러닝은 심장과 폐의 기능을 향상시켜 전반적인 체력 증가에 도움을 줍니다.</li>
 
-                        <li>체중 관리
-                            칼로리 소모가 높아 체중 감량과 건강한 몸매 유지에 효과적입니다.</li>
+                    <li>체중 관리
+                        칼로리 소모가 높아 체중 감량과 건강한 몸매 유지에 효과적입니다.</li>
 
-                        <li>스트레스 감소 및 정신 건강 증진
-                            러닝 중 분비되는 엔도르핀은 기분을 좋게 만들고 스트레스를 해소하는 데 도움을 줍니다.</li>
+                    <li>스트레스 감소 및 정신 건강 증진
+                        러닝 중 분비되는 엔도르핀은 기분을 좋게 만들고 스트레스를 해소하는 데 도움을 줍니다.</li>
 
-                        <li>근육 및 뼈 강화
-                            하체 근육을 강화하고 골밀도를 높여 골다공증 예방에도 효과적입니다.</li>
-                    </ul>
-                </section>
+                    <li>근육 및 뼈 강화
+                        하체 근육을 강화하고 골밀도를 높여 골다공증 예방에도 효과적입니다.</li>
+                </ul>
+            </section>
 
-                <section>
-                    <h3>맞춤형 러닝 시스템이 제공하는 정보</h3>
-                    <ul>
-                        <li>개인별 체력과 목표에 따른 맞춤 트레이닝 프로그램
+            <section>
+                <h3>맞춤형 러닝 시스템이 제공하는 정보</h3>
+                <ul>
+                    <li>개인별 체력과 목표에 따른 맞춤 트레이닝 프로그램
 
-                            발 모양, 체중, 러닝 스타일에 맞춘 신발 추천
+                        발 모양, 체중, 러닝 스타일에 맞춘 신발 추천
 
-                            부상 예방을 위한 자세 교정 및 스트레칭 가이드
+                        부상 예방을 위한 자세 교정 및 스트레칭 가이드
 
-                            실시간 러닝 데이터 분석 및 피드백 제공</li>
-                    </ul>
-                </section>
+                        실시간 러닝 데이터 분석 및 피드백 제공</li>
+                </ul>
+            </section>
 
-                <section>
-                    <h3>관리자의 한마디</h3>
-                    <ul>
-                        <li>맞춤형 러닝 시스템은 개인의 러닝 스타일, 체력 수준, 목표에 최적화된 트레이닝 계획과 장비 추천을 통해 러닝 경험을 한 단계 업그레이드하고,
-                            초보자부터 전문 러너까지 누구나 자신에게 딱 맞는 러닝 프로그램을 통해 부상의 위험을 줄이고 꾸준한 성장을 돕고 싶은 마음에 만들게 되었습니다.</li>
-                    </ul>
-                </section>
-            </div>
+            <section>
+                <h3>관리자의 한마디</h3>
+                <ul>
+                    <li>맞춤형 러닝 시스템은 개인의 러닝 스타일, 체력 수준, 목표에 최적화된 트레이닝 계획과 장비 추천을 통해 러닝 경험을 한 단계 업그레이드하고,
+                        초보자부터 전문 러너까지 누구나 자신에게 딱 맞는 러닝 프로그램을 통해 부상의 위험을 줄이고 꾸준한 성장을 돕고 싶은 마음에 만들게 되었습니다.</li>
+                </ul>
+            </section>
         </div>
+    </div>
     </div>
 
     </section>
@@ -277,7 +297,8 @@
         data() {
             return {
                 // 변수 - (key : value)
-                showModal: true
+                showModal: true,
+                isLoggedIn: false
             };
         },
         methods: {
@@ -297,12 +318,27 @@
             },
             closeModal() {
                 this.showModal = false;
+            },
+            logout: function () {
+                sessionStorage.clear(); // 세션 스토리지의 모든 데이터 삭제
+                this.isLoggedIn = false; // 로그인 상태를 false로 변경
+                alert("로그아웃 되었습니다.");
+                location.reload(); // 페이지 새로고침
+            },
+            // 페이지 로드 시 로그인 상태를 확인하는 메서드
+            checkLoginStatus: function () {
+                if (sessionStorage.getItem("sessionId")) {
+                    this.isLoggedIn = true;
+                } else {
+                    this.isLoggedIn = false;
+                }
             }
 
         }, // methods
         mounted() {
             // 처음 시작할 때 실행되는 부분
             let self = this;
+            this.checkLoginStatus();
         }
     });
 

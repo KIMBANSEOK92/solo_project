@@ -13,12 +13,14 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        body,
-        html {
-            font-family: 'Segoe UI', sans-serif;
-            height: 100%;
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+
         }
 
         /* 헤더 스타일 */
@@ -48,7 +50,7 @@
         .sub {
             font-size: 12px;
             font-weight: normal;
-            color: #ccc;
+            color: #ffffff;
         }
 
         nav ul {
@@ -81,6 +83,34 @@
             color: black;
         }
 
+        /* Hero 이미지 영역 */
+        .hero {
+            /* 이미지 파일명 맞게 수정 */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-text {
+            color: white;
+            text-align: center;
+            text-shadow: 1px 1px 5px black;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .hero-text p {
+            font-size: 1.5rem;
+            opacity: 0.8;
+        }
+
         a {
             color: rgb(255, 255, 255);
             text-decoration: none;
@@ -94,6 +124,7 @@
             cursor: pointer;
             border-radius: 5px;
             transition: all 0.3s ease;
+
 
         }
 
@@ -129,8 +160,10 @@
                     </button>
                 </div>
             </div>
+        </header>
+
+        </section>
     </div>
-    </header>
     </div>
 </body>
 
@@ -142,6 +175,7 @@
             return {
                 // 변수 - (key : value)
                 isLoggedIn: false
+                
             };
         },
         methods: {
