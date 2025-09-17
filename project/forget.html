@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>비밀번호 찾기</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -15,46 +15,44 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-
+            font-family: 'Noto Sans KR', sans-serif;
         }
 
         body,
         html {
             margin: 0;
-            font-family: 'Noto Sans KR', sans-serif;
-            color: #333;
-            font-family: 'Segoe UI', sans-serif;
             height: 100%;
-
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 100px auto;
-            background-color: #fff;
-            border-radius: 20px;
-            padding: 40px 50px;
-            box-shadow: 0 0 5px #ccc;
+            background-color: #f4f4f8;
+            color: #333;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
 
         .signup-box {
             max-width: 470px;
-            margin: 0 auto;
-            padding: 100px 50px 200px;
-            border-radius: 20px;
+            padding: 50px 40px 60px;
+            /* 패딩 조정 */
+            border-radius: 15px;
+            /* 모서리 둥글게 */
             background-color: #fff;
-            box-shadow: 0 0 5px #110a30;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            /* 그림자 효과 */
+            text-align: center;
         }
 
         .signup-box h2 {
-            font-weight: 1000;
-            font-size: 30px;
-            margin-bottom: 30px;
+            font-weight: 800;
+            /* 굵기 조정 */
+            font-size: 28px;
+            /* 폰트 크기 조정 */
+            margin-bottom: 15px;
+            color: #333;
         }
 
         .signup-box p.desc {
-            font-size: 15px;
-            margin-bottom: 20px;
+            font-size: 14px;
+            margin-bottom: 30px;
             color: #666;
         }
 
@@ -62,42 +60,37 @@
         input[type="password"],
         select {
             width: 100%;
-            height: 34px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            padding: 0 10px;
-            margin-bottom: 5px;
-            font-size: 13px;
-            color: #999;
+            height: 45px;
+            /* 입력 높이 증가 */
+            border-radius: 8px;
+            /* 모서리 둥글게 */
+            border: 1px solid #ddd;
+            /* 테두리 색상 조정 */
+            padding: 0 15px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #333;
+            transition: border-color 0.3s ease;
+        }
+
+        input[type="text"]:focus,
+        input[type="password"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #7b67f7;
+            /* 포커스 시 테두리 색상 */
         }
 
         input::placeholder {
-            color: #ccc;
-        }
-
-        button.check-btn {
-            background-color: #7b67f7;
-            border: none;
-            color: white;
-            padding: 0 12px;
-            font-size: 15px;
-            height: 40px;
-            border-radius: 6px;
-            cursor: pointer;
-            margin-left: 8px;
-        }
-
-        .error-msg {
-            font-size: 10px;
-            color: #f47f7f;
-            margin-bottom: 10px;
+            color: #aaa;
         }
 
         .email-row {
             display: flex;
             align-items: center;
-            gap: 5px;
-            margin-bottom: 20px;
+            gap: 8px;
+            /* 간격 조정 */
+            margin-bottom: 15px;
         }
 
         .email-row input {
@@ -105,376 +98,244 @@
             margin-bottom: 0;
         }
 
+        .email-row span {
+            font-size: 16px;
+            /* 폰트 크기 조정 */
+            font-weight: bold;
+            color: #555;
+        }
+
         .email-row select {
-            width: 120px;
-            height: 34px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            padding-left: 10px;
-            font-size: 13px;
-            color: #333;
+            width: 150px;
+            /* 도메인 선택 너비 조정 */
+            height: 45px;
+            padding-left: 15px;
         }
 
         .dob-row {
             display: flex;
             gap: 10px;
-            margin-bottom: 20px;
-
+            margin-bottom: 25px;
+            /* 아래 간격 증가 */
         }
 
         .dob-row select {
-            width: 80px;
-            height: 34px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            padding-left: 10px;
-            font-size: 13px;
-            color: #333;
+            width: calc(33.33% - 6.67px);
+            /* 3개로 균등 분할 */
+            padding-left: 15px;
         }
 
-        input.phone {
-            width: 100%;
-            height: 34px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
-            padding: 0 10px;
-            font-size: 13px;
-            color: #999;
-            margin-bottom: 30px;
+        .dob-row select:not(:last-child) {
+            margin-right: 0;
+            /* 마지막 선택지가 아닌 경우 오른쪽 마진 제거 */
         }
+
 
         button.submit-btn {
             width: 100%;
-            height: 38px;
-            border-radius: 5px;
+            height: 48px;
+            /* 버튼 높이 증가 */
+            border-radius: 8px;
+            /* 모서리 둥글게 */
             border: none;
             background-color: #7b67f7;
             color: white;
             font-size: 16px;
-            cursor: pointer;
-        }
-
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f4f8;
-            padding: 10px;
-        }
-
-        .form-group {
-            max-width: 150px;
-            margin: auto;
-
-        }
-
-        .form-title {
-            font-size: 15px;
             font-weight: bold;
-            margin-bottom: 7px;
-            color: #333;
-
-        }
-
-        .gender-options {
-            display: flex;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .gender-radio {
-            position: relative;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 8px 15px;
-            border: 2px solid #ccc;
-            border-radius: 10px;
             cursor: pointer;
-            transition: all 0.3s ease;
-            background-color: white;
-            width: 100%;
-            text-align: center;
-            user-select: none;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px;
+            /* 버튼 아래 간격 */
         }
 
-        .gender-radio:hover {
-            border-color: #6366f1;
+        button.submit-btn:hover {
+            background-color: #6250e0;
         }
 
-        .gender-radio input[type="radio"] {
-            display: none;
-        }
-
-        .gender-radio.selected {
-            background: linear-gradient(to right, #a78bfa, #6366f1);
-            color: white;
-            border-color: #6366f1;
-        }
-
-        .selected-value {
-            margin-top: 4px;
-            font-size: 13px;
-            text-align: center;
-            color: #555;
-        }
-
-        #app {
-            max-width: 800px;
-            margin: 0 auto;
-            background-color: #fff;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
-            min-height: 100vh;
-            display: flex;
-        }
-
-        /* 왼쪽 메뉴바 */
-        .sidebar {
-            width: 200px;
-            background-color: #f9f9f9;
-            padding: 20px;
-            border-right: 1px solid #eee;
-        }
-
-        .user-profile {
-            text-align: center;
-            padding-bottom: 20px;
-            border-bottom: 1px solid #eee;
-        }
-
-        .profile-img {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background-color: #ddd;
-            display: inline-flex;
-            justify-content: center;
-            align-items: center;
-            font-size: 40px;
-            color: #fff;
-        }
-
-        .profile-id {
-            margin-top: 10px;
-            font-weight: bold;
-            font-size: 16px;
-        }
-
-        .profile-email {
-            font-size: 14px;
-            color: #666;
-        }
-
-        .sidebar-menu {
-            list-style: none;
-            padding: 0;
+        .a-group {
             margin-top: 20px;
+            /* 되돌아가기 버튼 위 간격 */
         }
 
-        .sidebar-menu li {
-            padding: 10px 0;
-            cursor: pointer;
-            color: #555;
-            font-weight: bold;
-        }
-
-        .sidebar-menu li.active {
-            color: #4CAF50;
-            /* Active link color */
-        }
-
-        .sidebar-menu li:hover {
-            color: #333;
-        }
-
-        /* 메인 콘텐츠 영역 */
-        .main-content {
-            flex: 1;
-            padding: 30px;
-        }
-
-        .content-header {
-            font-size: 24px;
-            font-weight: bold;
-            margin-bottom: 20px;
-            color: #333;
-        }
-
-        .settings-section {
-            background-color: #fff;
-            border: 1px solid #eee;
-            border-radius: 8px;
-            padding: 20px;
-            margin-bottom: 20px;
-        }
-
-        .setting-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px 0;
-            border-bottom: 1px solid #eee;
-        }
-
-        .setting-item:last-child {
-            border-bottom: none;
-        }
-
-        .setting-label {
-            font-weight: bold;
-            color: #555;
-        }
-
-        .setting-action {
-            color: #3b82f6;
-            cursor: pointer;
-        }
-
-        .setting-toggle-container {
-            display: flex;
-            align-items: center;
-        }
-
-        .setting-toggle {
-            position: relative;
+        .a-back {
             display: inline-block;
-            width: 40px;
+            padding: 12px 20px;
+            background-color: #e5e7eb;
+            color: #1f2937;
+            border: none;
+            border-radius: 8px;
+            font-weight: bold;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .a-back:hover {
+            background-color: #d1d5db;
+        }
+
+        /* 오류 메시지 스타일 */
+        .error-message {
+            color: #f47f7f;
+            font-size: 13px;
+            margin-bottom: 15px;
             height: 20px;
+            /* 오류 메시지 영역 확보 */
         }
 
-        .setting-toggle input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #ccc;
-            transition: .4s;
-            border-radius: 34px;
-        }
-
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 14px;
-            width: 14px;
-            left: 3px;
-            bottom: 3px;
-            background-color: white;
-            transition: .4s;
-            border-radius: 50%;
-        }
-
-        input:checked+.slider {
-            background-color: #4CAF50;
-        }
-
-        input:checked+.slider:before {
-            transform: translateX(20px);
+        /* 성공 메시지 스타일 */
+        .success-message {
+            color: #4CAF50;
+            font-size: 13px;
+            margin-bottom: 15px;
+            height: 20px;
         }
     </style>
 </head>
 
 <body>
     <div id="app">
-        <!-- html 코드는 id가 app인 태그 안에서 꼭 작업-->
+        <div class="signup-box">
+            <h2>계정 찾기</h2>
+            <p class="desc">가입 시 등록한 이메일과 전화번호를 입력하세요.</p>
 
-        <div class="container">
-            <div class="signup-box">
-                <h2>계정 찾기</h2>
-                <p class="desc">전화번호 또는 복구 이메일을 입력하세요.</p>
-                <form>
-                    <div class="email-row">
-                        <input type="text" placeholder="이메일 주소" />
-                        <span>@</span>
-                        <select>
-                            <option>naver.com</option>
-                            <option>gmail.com</option>
-                            <option>daum.net</option>
-                            <option>kakaocorp.com</option>
-                            <option>facebook.com</option>
-                        </select>
-                    </div>
-                    <input type="text" class="phone" placeholder="휴대폰 번호 입력 ('-' 제외 11자리 입력)" />
-                    <div class="dob-row">
-                        <select v-model="birthYear">
-                            <option disabled value="">년도</option>
-                            <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
-                        </select>
+            <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
+            <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
 
-                        <select v-model="birthMonth">
-                            <option disabled value="">월</option>
-                            <option v-for="month in months" :key="month" :value="month">{{ month }}</option>
-                        </select>
+            <form @submit.prevent="findPassword">
+                <div class="email-row">
+                    <input type="text" v-model="emailId" placeholder="이메일 주소" required />
+                    <span>@</span>
+                    <select v-model="emailDomain">
+                        <option value="naver.com">naver.com</option>
+                        <option value="gmail.com">gmail.com</option>
+                        <option value="daum.net">daum.net</option>
+                        <option value="kakaocorp.com">kakaocorp.com</option>
+                        <option value="facebook.com">facebook.com</option>
+                    </select>
+                </div>
+                <input type="text" v-model="phone" class="phone" placeholder="휴대폰 번호 ('-' 제외 11자리)" required
+                    pattern="\d{11}" title="하이픈 없이 11자리 숫자를 입력해주세요." />
 
-                        <select v-model="birthDay">
-                            <option disabled value="">일</option>
-                            <option v-for="day in days" :key="day" :value="day">{{ day }}</option>
-                        </select>
-                    </div>
-                    <button type="submit" class="submit-btn">다음</button>
-                </form>
-            </div>
+                <div class="dob-row">
+                    <select v-model="birthYear" required>
+                        <option value="" disabled>년</option>
+                        <option v-for="year in years" :key="year" :value="year">{{ year }}년</option>
+                    </select>
+                    <select v-model="birthMonth" required>
+                        <option value="" disabled>월</option>
+                        <option v-for="month in months" :key="month" :value="month">{{ month }}월</option>
+                    </select>
+                    <select v-model="birthDay" required>
+                        <option value="" disabled>일</option>
+                        <option v-for="day in days" :key="day" :value="day">{{ day }}일</option>
+                    </select>
+                </div>
+
+                <button type="submit" class="submit-btn">다음</button>
+                <div class="a-group">
+                    <a class="a-back no-line" href="login.html">되돌아가기</a>
+                </div>
+            </form>
         </div>
     </div>
-</body>
+
+    <script>
+        const app = Vue.createApp({
+            data() {
+                return {
+                    // 계정 찾기 관련 데이터
+                    emailId: '',
+                    emailDomain: 'naver.com', // 기본값 설정
+                    phone: '',
+                    birthYear: '',
+                    birthMonth: '',
+                    birthDay: '',
+
+                    // 날짜 옵션
+                    years: [],
+                    months: [],
+                    days: [],
+
+                    // 메시지 관련
+                    errorMessage: '',
+                    successMessage: ''
+                };
+            },
+            methods: {
+                findPassword: async function () {
+                    this.errorMessage = ''; // 이전 오류 메시지 초기화
+                    this.successMessage = ''; // 이전 성공 메시지 초기화
+
+                    // 입력 값 검증
+                    if (!this.emailId || !this.emailDomain || !this.phone || !this.birthYear || !this.birthMonth || !this.birthDay) {
+                        this.errorMessage = '모든 정보를 정확히 입력해주세요.';
+                        return;
+                    }
+
+                    // 휴대폰 번호 형식 검증 (11자리 숫자)
+                    const phoneRegex = /^\d{11}$/;
+                    if (!phoneRegex.test(this.phone)) {
+                        this.errorMessage = '휴대폰 번호는 하이픈 없이 11자리의 숫자로 입력해주세요.';
+                        return;
+                    }
+
+                    const fullEmail = `${this.emailId}@${this.emailDomain}`;
+                    // 날짜 형식을 'YYYY-MM-DD'로 맞춰서 전송
+                    const birthDate = `${this.birthYear}-${String(this.birthMonth).padStart(2, '0')}-${String(this.birthDay).padStart(2, '0')}`;
+
+                    try {
+                        const response = await $.ajax({
+                            url: "http://localhost:3009/findPassword",
+                            dataType: "json",
+                            type: "POST",
+                            data: {
+                                email: fullEmail,
+                                phone: this.phone,
+                                birth: birthDate
+                            }
+                        });
+
+                        if (response.success) {
+                            this.successMessage = response.message;
+                            // 비밀번호 찾기 성공 후, 약 3초 뒤에 로그인 페이지로 이동 (선택 사항)
+                            setTimeout(() => {
+                                window.location.href = 'login.html';
+                            }, 3000);
+                        } else {
+                            this.errorMessage = response.message;
+                        }
+                    } catch (error) {
+                        console.error("API 호출 오류:", error);
+                        // 서버에서 보낸 오류 메시지가 있다면 표시
+                        if (error.responseJSON && error.responseJSON.message) {
+                            this.errorMessage = error.responseJSON.message;
+                        } else {
+                            this.errorMessage = '서버 오류가 발생했습니다. 다시 시도해주세요.';
+                        }
+                    }
+                }
+            },
+            mounted() {
+                // 년도 생성
+                const currentYear = new Date().getFullYear();
+                for (let y = currentYear; y >= currentYear - 100; y--) {
+                    this.years.push(y);
+                }
+                // 월 생성
+                for (let m = 1; m <= 12; m++) {
+                    this.months.push(m);
+                }
+                // 일 생성
+                for (let d = 1; d <= 31; d++) {
+                    this.days.push(d);
+                }
+
+                // 초기값 설정: select 엘리먼트의 value를 vue 데이터로 바인딩
+                this.emailDomain = document.querySelector('.email-row select').value;
+            }
+        });
+
+        app.mount('#app');
+    </script>
 
 </html>
-
-<script>
-
-    const app = Vue.createApp({
-        data() {
-            return {
-                // 변수 - (key : value)
-                birthYear: '',
-                birthMonth: '',
-                birthDay: '',
-                years: [],
-                months: [],
-                days: []
-            };
-        },
-        methods: {
-            // 함수(메소드) - (key : function())
-            fnUserList: function () {
-                let self = this;
-                let param = {};
-                $.ajax({
-                    url: "http://localhost:3009/",
-                    dataType: "json",
-                    type: "GET",
-                    data: param,
-                    success: function (data) {
-
-                    }
-                });
-            },
-
-
-        }, // methods
-        mounted() {
-            // 처음 시작할 때 실행되는 부분
-            let self = this;
-            const currentYear = new Date().getFullYear();
-            for (let y = currentYear; y >= currentYear - 100; y--) {
-                this.years.push(y);
-            }
-            // 1~12월 생성
-            for (let m = 1; m <= 12; m++) {
-                this.months.push(m);
-            }
-            // 1~31일 생성
-            for (let d = 1; d <= 31; d++) {
-                this.days.push(d);
-            }
-        }
-    });
-
-    app.mount('#app');
-</script>

@@ -13,12 +13,17 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
         }
 
-        body,
-        html {
-            font-family: 'Segoe UI', sans-serif;
-            height: 100%;
+        body {
+            margin: 0;
+            background-image: url('/img/run3.jpg');
+            background-size: cover;
+            background-position: center;
+
+
+
         }
 
         /* 헤더 스타일 */
@@ -48,7 +53,7 @@
         .sub {
             font-size: 12px;
             font-weight: normal;
-            color: #ccc;
+            color: #ffffff;
         }
 
         nav ul {
@@ -81,6 +86,34 @@
             color: black;
         }
 
+        /* Hero 이미지 영역 */
+        .hero {
+            /* 이미지 파일명 맞게 수정 */
+            background-size: cover;
+            background-position: center;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .hero-text {
+            color: white;
+            text-align: center;
+            text-shadow: 1px 1px 5px black;
+        }
+
+        .hero-text h1 {
+            font-size: 3rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .hero-text p {
+            font-size: 1.5rem;
+            opacity: 0.8;
+        }
+
         a {
             color: rgb(255, 255, 255);
             text-decoration: none;
@@ -96,12 +129,291 @@
             transition: all 0.3s ease;
 
 
-
         }
 
         .auth .mypage-button:hover {
             background-color: white;
             color: black;
+
+        }
+
+        :root {
+            --bg: #f6f7f9;
+            --card: #ffffff;
+            --text: #1a1a1a;
+            --muted: #6b7280;
+            --brand: #111827;
+            --accent: #2563eb;
+            --accent-2: #e2e8f0;
+            --line: #e5e7eb;
+            --ok: #059669;
+            --warn: #9ca3af;
+            --shadow: 0 6px 20px rgba(0, 0, 0, 0.06);
+            --radius: 14px;
+        }
+
+        a {
+            color: inherit;
+            text-decoration: none
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            letter-spacing: 0.2px;
+        }
+
+        .brand-badge {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            border-radius: 8px;
+            background: #111;
+            color: #fff;
+            font-size: 13px;
+        }
+
+        .brand-sub {
+            font-size: 12px;
+            color: #374151;
+            font-weight: 600
+        }
+
+        .nav {
+            display: flex;
+            gap: 16px;
+            margin-left: 16px;
+            flex: 1;
+            flex-wrap: wrap
+        }
+
+        .nav a {
+            padding: 8px 10px;
+            border-radius: 10px;
+            color: #374151;
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .nav a.is-active {
+            color: #0f172a;
+            background: #fff;
+            box-shadow: var(--shadow)
+        }
+
+        .spacer {
+            flex: 1
+        }
+
+        .login-btn {
+            padding: 8px 14px;
+            border-radius: 10px;
+            border: 1px solid var(--line);
+            background: #fff;
+            font-weight: 700;
+            font-size: 14px;
+            transition: .2s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: var(--shadow)
+        }
+
+        /* Main */
+        .main {
+            max-width: 1100px;
+            margin: 200px auto;
+            padding: 10 20px 60px;
+
+
+        }
+
+        /* Controls */
+        .panel {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 18px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .title {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .title h1 {
+            margin: 0;
+            font-size: 20px
+        }
+
+        .title p {
+            margin: 0;
+            color: var(--muted);
+            font-size: 13px
+        }
+
+        .controls {
+            display: flex;
+            gap: 10px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .select {
+            text-align: center;
+            appearance: none;
+            padding: 5px 40px 10px 12px;
+            font-weight: 800;
+            font-size: 15px;
+            color: #0f172a;
+            border: 2px solid var(--line);
+            border-radius: 12px;
+            background:
+                linear-gradient(180deg, #fff, #fafafa) no-repeat padding-box,
+                conic-gradient(from 180deg at 50% 50%, transparent 0 75%, var(--accent) 75% 100%) border-box;
+            background: #fff url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"><path d="M4 6l4 4 4-4" stroke="%236b7280" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>') right 12px center/16px no-repeat;
+        }
+
+        .badge {
+            padding: 7px 10px;
+            background: #eef2ff;
+            color: #3730a3;
+            border-radius: 999px;
+            font-size: 12px;
+            font-weight: 700;
+            border: 1px solid #e0e7ff;
+        }
+
+        /* Grid */
+        .grid {
+            margin-top: 18px;
+            display: grid;
+            gap: 14px;
+            grid-template-columns: repeat(12, 1fr);
+        }
+
+        .col-6 {
+            grid-column: span 6
+        }
+
+        .col-4 {
+            grid-column: span 4
+        }
+
+        @media (max-width:900px) {
+            .col-4 {
+                grid-column: span 6
+            }
+        }
+
+        @media (max-width:640px) {
+
+            .col-6,
+            .col-4 {
+                grid-column: span 12
+            }
+        }
+
+        /* Cards */
+        .card {
+            background: var(--card);
+            border: 1px solid var(--line);
+            border-radius: 16px;
+            box-shadow: var(--shadow);
+            padding: 16px;
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            transition: .2s;
+        }
+
+        .card:hover {
+            transform: translateY(-2px)
+        }
+
+        .brand-chip {
+            width: 44px;
+            height: 44px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 800;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+        }
+
+        .brand-nike {
+            background: #111
+        }
+
+        .brand-adidas {
+            background: #0f172a
+        }
+
+        .brand-brooks {
+            background: #1e3a8a
+        }
+
+        .brand-saucony {
+            background: #b91c1c
+        }
+
+        .brand-hoka {
+            background: #0ea5e9
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            gap: 4px
+        }
+
+        .brand-name {
+            font-weight: 800;
+            font-size: 14px;
+            color: #0f172a;
+            letter-spacing: .3px
+        }
+
+        .model {
+            font-weight: 700;
+            font-size: 16px
+        }
+
+        .model.none {
+            color: var(--warn);
+            font-weight: 700
+        }
+
+        .pill {
+            margin-left: auto;
+            padding: 6px 10px;
+            border-radius: 999px;
+            background: #f1f5f9;
+            color: #334155;
+            font-weight: 700;
+            font-size: 12px;
+            border: 1px solid var(--line);
+        }
+
+        .hint {
+            padding: 30px;
+            text-align: center;
+            color: #000000;
         }
     </style>
 </head>
@@ -109,30 +421,66 @@
 <body>
     <div id="app">
         <!-- html 코드는 id가 app인 태그 안에서 꼭 작업-->
-        <header>
-            <div class="navbar">
-                <div class="logo"><a href="main.html">Run</a><br><span class="sub">러닝 1000만시대</span></div>
-                <nav>
-                    <ul>
-                        <li><a href="introduce.html">사이트 소개</a></li>
-                        <li><a href="addr.html">오시는길</a></li>
-                        <li><a href="customized.html">러닝화 추천</a></li>
-                        <li><a href="list.html">게시판</a></li>
-                        <li>준비중</li>
-                        <li>준비중</li>
-                        <li>준비중</li>
-                    </ul>
-                </nav>
-                <div class="auth">
-                    <button v-if="!isLoggedIn"><a href="login.html">LOGIN</a></button>
-                    <button v-if="isLoggedIn" @click="logout">LOGOUT</button>
-                    <button v-if="isLoggedIn" class="mypage-button">
-                        <a href="mypage.html">마이페이지</a>
-                    </button>
+        <section>
+            <header>
+
+                <div class="navbar">
+                    <div class="logo"><a href="main.html">Run</a><br><span class="sub">러닝 1000만시대</span></div>
+                    <nav>
+                        <ul>
+                            <li><a href="introduce.html">사이트 소개</a></li>
+                            <li><a href="addr.html">오시는길</a></li>
+                            <li><a href="customized.html">러닝화 추천</a></li>
+                            <li><a href="list.html">게시판</a></li>
+                            <li>준비중</li>
+                            <li>준비중</li>
+                            <li>준비중</li>
+                        </ul>
+                    </nav>
+                    <div class="auth">
+                        <button v-if="!isLoggedIn"><a href="login.html">LOGIN</a></button>
+                        <button v-if="isLoggedIn" @click="logout">LOGOUT</button>
+                        <button v-if="isLoggedIn" class="mypage-button">
+                            <a href="mypage.html">마이페이지</a>
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </header>
+            </header>
+
+        </section>
+        <main id="app" class="main">
+            <section class="panel">
+                <div class="title">
+                    <h1>2025 러닝화 라인업</h1>
+                    <p>목록에서 용도를 선택하면 해당 브랜드별 모델이 표시됩니다.</p>
+                </div>
+                <div class="controls">
+                    <span class="badge">브랜드 5</span>
+                    <select v-model="selected" class="select" aria-label="용도 선택">
+                        <option value="입문용">입문용</option>
+                        <option value="중급용">중급용</option>
+                        <option value="고급용">고급용</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="grid">
+                <div v-for="item in currentList" :key="item.brand" class="card col-4">
+                    <div class="brand-chip" :class="brandClass(item.brand)">{{ brandShort(item.brand) }}</div>
+                    <div class="info">
+                        <div class="brand-name">{{ item.brand }}</div>
+                        <div class="model" :class="{ none: item.model === '없음' }">
+                            {{ item.model === '없음' ? '등록된 모델 없음' : item.model }}
+                        </div>
+                    </div>
+                    <div class="pill">{{ selected }}</div>
+                </div>
+            </section>
+
+            <p class="hint">- 표시 순서: Nike · Adidas · Brooks · Saucony · Hoka -</p>
+        </main>
     </div>
+
 </body>
 
 </html>
@@ -142,8 +490,40 @@
         data() {
             return {
                 // 변수 - (key : value)
-                isLoggedIn: false
-            };
+                isLoggedIn: false,
+                selected: '입문용',
+                dataMap: {
+                    '입문용': [
+                        { brand: 'Nike', model: '리액트X 41' },
+                        { brand: 'Adidas', model: '슈퍼노바 라이드 2' },
+                        { brand: 'Brooks', model: '프리세션 1080' },
+                        { brand: 'Saucony', model: '없음' },
+                        { brand: 'Hoka', model: '아라히 7' },
+                    ],
+                    '중급용': [
+                        { brand: 'Nike', model: '페가수스 41' },
+                        { brand: 'Adidas', model: '아디제로 보스턴 12' },
+                        { brand: 'Brooks', model: '하이페리온 템포' },
+                        { brand: 'Saucony', model: '엔도르핀 스피드 3' },
+                        { brand: 'Hoka', model: '마하 5' },
+                    ],
+                    '고급용': [
+                        { brand: 'Nike', model: '베이퍼플라이 4' },
+                        { brand: 'Adidas', model: '아디제로 프로 4' },
+                        { brand: 'Brooks', model: '없음' },
+                        { brand: 'Saucony', model: '엔도르핀 엘리트' },
+                        { brand: 'Hoka', model: '없음' },
+                    ]
+                }
+            }
+        },
+        computed: {
+            currentList() {
+                // 표시 순서 고정
+                const order = ['Nike', 'Adidas', 'Brooks', 'Saucony', 'Hoka'];
+                const list = this.dataMap[this.selected] || [];
+                return order.map(b => list.find(i => i.brand === b) || { brand: b, model: '없음' });
+            }
         },
         methods: {
             // 함수(메소드) - (key : function())
@@ -173,6 +553,24 @@
                 } else {
                     this.isLoggedIn = false;
                 }
+            },
+            brandShort(name) {
+                return {
+                    'Nike': 'NK',
+                    'Adidas': 'AD',
+                    'Brooks': 'BK',
+                    'Saucony': 'SC',
+                    'Hoka': 'HK'
+                }[name] || name.slice(0, 2).toUpperCase();
+            },
+            brandClass(name) {
+                return {
+                    'Nike': 'brand-nike',
+                    'Adidas': 'brand-adidas',
+                    'Brooks': 'brand-brooks',
+                    'Saucony': 'brand-saucony',
+                    'Hoka': 'brand-hoka'
+                }[name] || 'brand-nike';
             }
 
         }, // methods

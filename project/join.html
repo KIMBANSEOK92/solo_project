@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>회원가입</title>
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
@@ -15,18 +15,15 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-
         }
 
         body,
         html {
             margin: 0;
-            background-image: image("img/poto.jpg");
+            background-color: #f4f4f8;
             font-family: 'Noto Sans KR', sans-serif;
             color: #333;
-            font-family: 'Segoe UI', sans-serif;
             height: 100%;
-
         }
 
         .container {
@@ -105,6 +102,12 @@
             margin-bottom: 10px;
         }
 
+        .success-msg {
+            font-size: 10px;
+            color: #4CAF50;
+            margin-bottom: 10px;
+        }
+
         .email-row {
             display: flex;
             align-items: center;
@@ -131,7 +134,6 @@
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
-
         }
 
         .dob-row select {
@@ -166,16 +168,9 @@
             cursor: pointer;
         }
 
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            background-color: #f4f4f8;
-            padding: 10px;
-        }
-
-        .form-group {
-            max-width: 150px;
-            margin: auto;
-
+        button.submit-btn:disabled {
+            background-color: #ccc;
+            cursor: not-allowed;
         }
 
         .form-title {
@@ -183,7 +178,6 @@
             font-weight: bold;
             margin-bottom: 7px;
             color: #333;
-
         }
 
         .gender-options {
@@ -228,54 +222,72 @@
             text-align: center;
             color: #555;
         }
+
+        .a-group {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .a-back {
+            padding: 12px 15px;
+            background-color: #e5e7eb;
+            color: #1f2937;
+            border: none;
+            border-radius: 5px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        .a-back:hover {
+            background-color: #d1d5db;
+        }
+
+        .no-line {
+            text-decoration: none;
+        }
     </style>
 </head>
 
 <body>
     <div id="app">
-        <!-- html 코드는 id가 app인 태그 안에서 꼭 작업-->
-
         <div class="container">
             <div class="signup-box">
                 <h2>회원가입</h2>
                 <p class="desc">가입을 통해 더 다양한 서비스를 만나보세요!</p>
-                <form>
+                <form @submit.prevent="submitForm">
                     <div class="id-row">
-                        <input type="text" placeholder="아이디 입력 (6~20자)" />
-                        <button type="button" class="check-btn">중복 확인</button>
+                        <input type="text" placeholder="아이디 입력 (6~20자)" v-model="userId" @input="onUserIdInput"
+                            @blur="validateUserId" />
+                        <button type="button" class="check-btn" @click="checkIdDuplicate">중복 확인</button>
                     </div>
-                    <div class="error-msg">사용할 수 없는 아이디입니다</div>
-
-                    <input type="password" placeholder="비밀번호 입력 (문자, 숫자, 특수문자 포함 8~20자)" />
-                    <div class="error-msg" style="margin-top: 3px;">20자 이내 비밀번호를 입력해주세요</div>
-
-                    <input type="password" placeholder="비밀번호 재입력" />
-                    <div class="error-msg" style="margin-top: 3px;">비밀번호가 일치하지 않습니다</div>
-
-                    <input type="text" placeholder="이름을 입력" />
-                    <div class="error-msg" style="margin-top: 3px;">본인의 이름을 입력해주세요</div>
+                    <div v-if="userIdError" class="error-msg">{{ userIdError }}</div>
+                    <div v-if="idChecked && !userIdError" class="success-msg">사용 가능한 아이디입니다.</div>
+                    <input type="password" placeholder="비밀번호 입력 (문자, 숫자, 특수문자 포함 8~20자)" v-model="password"
+                        @input="validatePassword" />
+                    <div v-if="passwordError" class="error-msg" style="margin-top: 3px;">{{ passwordError }}</div>
+                    <input type="password" placeholder="비밀번호 재입력" v-model="passwordConfirm"
+                        @input="validatePasswordConfirm" />
+                    <div v-if="passwordConfirmError" class="error-msg" style="margin-top: 3px;">{{ passwordConfirmError
+                        }}</div>
+                    <input type="text" placeholder="이름을 입력" v-model="name" @blur="validateName" />
+                    <div v-if="nameError" class="error-msg" style="margin-top: 3px;">{{ nameError }}</div>
                     <div class="form-title">성별 선택</div>
-                    <div class="form-group">
-                        <div class="gender-options">
-                            <label class="gender-radio" :class="{ selected: gender === 'M' }">
-                                <input type="radio" value="M" v-model="gender" />
-                                남성
-                            </label>
-                            <label class="gender-radio" :class="{ selected: gender === 'F' }">
-                                <input type="radio" value="F" v-model="gender" />
-                                여성
-                            </label>
-                        </div>
-                        <div class="selected-value">
-                            선택한 성별:
-                            <strong>{{ gender === 'M' ? '남성' : gender === 'F' ? '여성' : '선택 안됨' }}</strong>
-                        </div>
+                    <div class="gender-options">
+                        <label class="gender-radio" :class="{ selected: gender === '남성' }">
+                            <input type="radio" value="남성" v-model="gender" /> 남성
+                        </label>
+                        <label class="gender-radio" :class="{ selected: gender === '여성' }">
+                            <input type="radio" value="여성" v-model="gender" /> 여성
+                        </label>
                     </div>
-
+                    <div class="selected-value">
+                        선택된 성별: {{ gender || '선택 안함' }}
+                    </div>
                     <div class="email-row">
-                        <input type="text" placeholder="이메일 주소" />
+                        <input type="text" placeholder="이메일 주소" v-model="emailId" @blur="validateEmail" />
                         <span>@</span>
-                        <select>
+                        <select v-model="emailDomain" @change="validateEmail">
                             <option>naver.com</option>
                             <option>gmail.com</option>
                             <option>daum.net</option>
@@ -283,27 +295,28 @@
                             <option>facebook.com</option>
                         </select>
                     </div>
-
+                    <div v-if="emailError" class="error-msg" style="margin-top: -15px;">{{ emailError }}</div>
                     <div class="dob-row">
                         <select v-model="birthYear">
                             <option disabled value="">년도</option>
                             <option v-for="year in years" :key="year" :value="year">{{ year }}</option>
                         </select>
-
                         <select v-model="birthMonth">
                             <option disabled value="">월</option>
                             <option v-for="month in months" :key="month" :value="month">{{ month }}</option>
                         </select>
-
                         <select v-model="birthDay">
                             <option disabled value="">일</option>
                             <option v-for="day in days" :key="day" :value="day">{{ day }}</option>
                         </select>
                     </div>
-
-                    <input type="text" class="phone" placeholder="휴대폰 번호 입력 ('-' 제외 11자리 입력)" />
-
-                    <button type="submit" class="submit-btn">가입하기</button>
+                    <input type="text" class="phone" placeholder="휴대폰 번호 입력 ('-' 제외 11자리 입력)" v-model="phone"
+                        @blur="validatePhone" />
+                    <div v-if="phoneError" class="error-msg" style="margin-top: -25px;">{{ phoneError }}</div>
+                    <button type="submit" class="submit-btn" :disabled="!isFormValid">가입하기</button>
+                    <div class="a-group">
+                        <a class="a-back no-line" href="login.html">되돌아가기</a>
+                    </div>
                 </form>
             </div>
         </div>
@@ -311,55 +324,213 @@
 </body>
 
 </html>
-
 <script>
-
     const app = Vue.createApp({
         data() {
             return {
-                // 변수 - (key : value)
+                userId: '',
+                password: '',
+                passwordConfirm: '',
+                name: '',
+                gender: '',
+                emailId: '',
+                emailDomain: 'naver.com',
+                phone: '',
                 birthYear: '',
                 birthMonth: '',
                 birthDay: '',
                 years: [],
                 months: [],
-                days: []
+                days: [],
+                userIdError: '',
+                idChecked: false,
+                passwordError: '',
+                passwordConfirmError: '',
+                nameError: '',
+                emailError: '',
+                phoneError: '',
             };
         },
+        computed: {
+            isFormValid() {
+                // 생년월일이 모두 선택되었는지 확인
+                const isDobSelected = this.birthYear && this.birthMonth && this.birthDay;
+
+                // 모든 입력 필드가 비어있지 않고, 모든 유효성 검사를 통과했는지 확인
+                return !this.userIdError && this.idChecked &&
+                    !this.passwordError && !this.passwordConfirmError &&
+                    !this.nameError && !this.emailError && !this.phoneError &&
+                    this.userId && this.password && this.passwordConfirm &&
+                    this.name && this.gender && this.emailId && this.phone &&
+                    isDobSelected;
+            }
+        },
         methods: {
-            // 함수(메소드) - (key : function())
-            fnUserList: function () {
-                let self = this;
-                let param = {};
-                $.ajax({
-                    url: "http://localhost:3009/",
-                    dataType: "json",
-                    type: "POST",
-                    data: param,
-                    success: function (data) {
+            async checkIdDuplicate() {
+                this.idChecked = false; // 중복 확인 상태 초기화
 
+                // 1차 유효성 검사: 아이디 비어있는지, 형식 맞는지 확인
+                if (!this.userId) {
+                    this.userIdError = '아이디를 입력해주세요.';
+                    alert(this.userIdError);
+                    return;
+                }
+                const idRegex = /^[a-zA-Z0-9]{6,20}$/; // 아이디 정규식: 6~20자, 영문/숫자
+                if (!idRegex.test(this.userId)) {
+                    this.userIdError = '아이디는 6~20자의 영문, 숫자만 가능합니다.';
+                    alert(this.userIdError);
+                    return;
+                }
+                this.userIdError = ''; // 유효성 검사 통과 시 에러 메시지 초기화
+
+                // 서버 통신 시작
+                try {
+                    const response = await $.ajax({
+                        url: `http://localhost:3009/check-id?id=${this.userId}`,
+                        dataType: "json",
+                        type: "GET"
+                    });
+
+                    if (response.isDuplicate) {
+                        this.userIdError = '이미 사용 중인 아이디입니다.';
+                        alert(this.userIdError);
+                        this.idChecked = false;
+                    } else {
+                        this.userIdError = '';
+                        this.idChecked = true;
+                        alert('사용 가능한 아이디입니다.');
                     }
-                });
+                } catch (error) {
+                    console.error("ID 중복 확인 실패:", error);
+                    this.userIdError = '서버 통신 오류가 발생했습니다.';
+                    alert(this.userIdError);
+                    this.idChecked = false;
+                }
             },
+            onUserIdInput() {
+                this.idChecked = false; // 아이디 입력 시 중복 확인 상태 초기화
+                this.userIdError = ''; // 입력 중에는 에러 메시지 제거
+            },
+            validateUserId() {
+                // @blur 이벤트 발생 시 유효성 검사
+                const idRegex = /^[a-zA-Z0-9]{6,20}$/;
+                if (!this.userId) {
+                    this.userIdError = '아이디를 입력해주세요.';
+                } else if (!idRegex.test(this.userId)) {
+                    this.userIdError = '아이디는 6~20자, 영문/숫자만 가능합니다.';
+                } else {
+                    this.userIdError = '';
+                }
+            },
+            validatePassword() {
+                // 비밀번호 정규식: 최소 8자, 최대 20자, 영문/숫자/특수문자 포함
+                const pwRegex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,20}$/;
+                if (!this.password) {
+                    this.passwordError = '비밀번호를 입력해주세요.';
+                } else if (!pwRegex.test(this.password)) {
+                    this.passwordError = '비밀번호는 8~20자, 영문/숫자/특수문자 포함해야 합니다.';
+                } else {
+                    this.passwordError = '';
+                }
+                this.validatePasswordConfirm(); // 비밀번호 확인도 함께 검사
+            },
+            validatePasswordConfirm() {
+                if (!this.passwordConfirm) {
+                    this.passwordConfirmError = '비밀번호를 다시 입력해주세요.';
+                } else if (this.password !== this.passwordConfirm) {
+                    this.passwordConfirmError = '비밀번호가 일치하지 않습니다.';
+                } else {
+                    this.passwordConfirmError = '';
+                }
+            },
+            validateName() {
+                this.nameError = this.name ? '' : '이름을 입력해주세요.';
+            },
+            validateEmail() {
+                const fullEmail = `${this.emailId}@${this.emailDomain}`;
+                // 이메일 형식 검증 정규식
+                const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+                if (!this.emailId) {
+                    this.emailError = '이메일 주소를 입력해주세요.';
+                } else if (!emailRegex.test(fullEmail)) {
+                    this.emailError = '유효한 이메일 형식이 아닙니다.';
+                } else {
+                    this.emailError = '';
+                }
+            },
+            validatePhone() {
+                const phoneRegex = /^\d{11}$/; // 휴대폰 번호 형식: 11자리 숫자
+                this.phoneError = phoneRegex.test(this.phone) ? '' : "휴대폰 번호는 '-' 없이 11자리 숫자여야 합니다.";
+            },
+            async submitForm() {
+                // 최종 폼 제출 전 모든 필드 유효성 검사
+                this.validateUserId();
+                this.validatePassword();
+                this.validatePasswordConfirm();
+                this.validateName();
+                this.validateEmail();
+                this.validatePhone();
 
-        }, // methods
+                // 아이디 중복 확인이 완료되지 않았으면 제출 방지
+                if (!this.idChecked) {
+                    alert('아이디 중복 확인을 완료해주세요.');
+                    return;
+                }
+
+                // 폼이 유효한 경우에만 서버에 데이터 전송
+                if (this.isFormValid) {
+                    const formData = {
+                        userId: this.userId,
+                        password: this.password,
+                        name: this.name,
+                        gender: this.gender,
+                        email: `${this.emailId}@${this.emailDomain}`,
+                        // 날짜를 YYYY-MM-DD 형식으로 조합
+                        birth: `${this.birthYear}-${String(this.birthMonth).padStart(2, '0')}-${String(this.birthDay).padStart(2, '0')}`,
+                        phone: this.phone
+                    };
+
+                    const queryString = new URLSearchParams(formData).toString();
+
+                    try {
+                        const response = await $.ajax({
+                            url: `http://localhost:3009/signup?${queryString}`,
+                            dataType: "json",
+                            type: "GET"
+                        });
+
+                        if (response.success) {
+                            alert('회원가입이 완료되었습니다!');
+                            window.location.href = 'login.html'; // 로그인 페이지로 이동
+                        } else {
+                            alert('회원가입에 실패했습니다: ' + response.message);
+                        }
+                    } catch (error) {
+                        console.error("가입 실패:", error);
+                        // 서버에서 반환된 오류 메시지를 표시
+                        const errorMessage = error.responseJSON ? error.responseJSON.message : '서버 오류가 발생했습니다.';
+                        alert('회원가입 실패: ' + errorMessage);
+                    }
+                } else {
+                    alert('입력된 정보를 다시 확인해주세요.');
+                }
+            }
+        },
         mounted() {
-            // 처음 시작할 때 실행되는 부분
-            let self = this;
+            // 년도, 월, 일 셀렉트 박스 옵션 생성
             const currentYear = new Date().getFullYear();
             for (let y = currentYear; y >= currentYear - 100; y--) {
                 this.years.push(y);
             }
-            // 1~12월 생성
             for (let m = 1; m <= 12; m++) {
                 this.months.push(m);
             }
-            // 1~31일 생성
             for (let d = 1; d <= 31; d++) {
                 this.days.push(d);
             }
         }
     });
-
     app.mount('#app');
 </script>
+
+</html>
