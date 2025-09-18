@@ -4,9 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <script src="https://code.jquery.com/jquery-3.7.1.js"
-        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/vue@3/dist/vue.global.js"></script>
     <style>
         * {
@@ -18,12 +15,10 @@
 
         body {
             margin: 0;
-
-
-
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f4f8;
         }
 
-        /* 헤더 스타일 */
         header {
             position: fixed;
             top: 0;
@@ -83,34 +78,6 @@
             color: black;
         }
 
-        /* Hero 이미지 영역 */
-        .hero {
-            /* 이미지 파일명 맞게 수정 */
-            background-size: cover;
-            background-position: center;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .hero-text {
-            color: white;
-            text-align: center;
-            text-shadow: 1px 1px 5px black;
-        }
-
-        .hero-text h1 {
-            font-size: 3rem;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .hero-text p {
-            font-size: 1.5rem;
-            opacity: 0.8;
-        }
-
         a {
             color: rgb(255, 255, 255);
             text-decoration: none;
@@ -124,8 +91,6 @@
             cursor: pointer;
             border-radius: 5px;
             transition: all 0.3s ease;
-
-
         }
 
         .auth .mypage-button:hover {
@@ -137,15 +102,225 @@
             color: inherit;
             text-decoration: none
         }
+
+        .mypage-section {
+            position: relative;
+            padding: 90px;
+            background-color: transparent;
+            min-height: calc(100vh - 80px);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            background-image: url('/img/run8.jpg');
+            background-size: cover;
+            background-position: center;
+            color: #333;
+            height: 100vh;
+            justify-content: flex-start;
+            overflow-y: auto;
+        }
+
+        .mypage-container {
+            width: 100%;
+            max-width: 1000px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 10px;
+            padding: 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            margin-top: 100px;
+        }
+
+        .mypage-header-tabs {
+            display: flex;
+            justify-content: space-around;
+            padding: 15px 0;
+            border-bottom: 2px solid #e0e0e0;
+            margin-bottom: 20px;
+        }
+
+        .mypage-tab {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: color 0.3s, border-bottom 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .mypage-tab.active {
+            color: #d85c49;
+            border-bottom-color: #d85c49;
+        }
+
+        .tab-content {
+            padding: 20px 0;
+        }
+
+        .review-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e0e0e0;
+        }
+
+        .review-tab-btn {
+            padding: 10px 20px;
+            cursor: pointer;
+            font-weight: bold;
+            border-bottom: 3px solid transparent;
+            margin-bottom: -2px;
+            transition: color 0.3s, border-bottom 0.3s;
+        }
+
+        .review-tab-btn.active {
+            color: #d85c49;
+            border-bottom-color: #d85c49;
+        }
+
+        .review-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .review-item:last-child {
+            border-bottom: none;
+        }
+
+        .review-details {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .product-image {
+            width: 80px;
+            height: 80px;
+            object-fit: cover;
+            border-radius: 5px;
+            border: 1px solid #ddd;
+        }
+
+        .product-info {
+            display: flex;
+            flex-direction: column;
+            gap: 5px;
+        }
+
+        .product-info p {
+            margin: 0;
+            font-size: 14px;
+        }
+
+        .product-name {
+            font-weight: bold;
+        }
+
+        .review-action {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 10px;
+        }
+
+        .review-action button {
+            background-color: #7b67f7;
+            color: white;
+            border: none;
+            padding: 9px 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .review-action button:hover {
+            background-color: #6250e0;
+        }
+
+        .review-meta {
+            font-size: 12px;
+            color: #888;
+        }
+
+        /* Message box styling */
+        .message-box {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            text-align: center;
+        }
+
+        .message-box button {
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+            background-color: #d85c49;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .account-details-list {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .account-details-item {
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .account-details-item:last-child {
+            border-bottom: none;
+        }
+
+        .account-details-label {
+            font-weight: bold;
+            display: inline-block;
+            width: 120px;
+            color: #555;
+        }
+
+        .withdraw-content {
+            text-align: center;
+            padding: 30px;
+        }
+
+        .withdraw-content p {
+            margin-bottom: 20px;
+            font-size: 16px;
+        }
+
+        .withdraw-content button {
+            background-color: #d85c49;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 5px;
+            border: none;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .withdraw-content button:hover {
+            background-color: #c04a3c;
+        }
     </style>
 </head>
 
 <body>
     <div id="app">
-        <!-- html 코드는 id가 app인 태그 안에서 꼭 작업-->
         <header>
             <div class="navbar">
-                <div class="logo"><a href="main.html">Run</a><br><span class="sub">러닝 1000만시대</span></div>
+                <div class="logo"><a href="main.html">Run</a><br><span class="sub">러닝 1000만시대</span>
+                </div>
                 <nav>
                     <ul>
                         <li><a href="introduce.html">사이트 소개</a></li>
@@ -167,56 +342,252 @@
             </div>
         </header>
 
+        <section class="mypage-section">
+            <div class="mypage-container">
+                <div class="mypage-header-tabs">
+                    <div v-for="tab in mypageTabs" :key="tab.name"
+                        :class="['mypage-tab', { active: activeMypageTab === tab.name }]"
+                        @click="activeMypageTab = tab.name">
+                        <span>{{ tab.label }}</span>
+                    </div>
+                </div>
+
+                <div class="tab-content">
+                    <div v-if="activeMypageTab === 'reviews'" class="review-tab-content">
+                        <div class="review-tabs">
+                            <div :class="['review-tab-btn', { active: reviewType === 'available' }]"
+                                @click="reviewType = 'available'">이번달 베스트 러닝화</div>
+                            <div :class="['review-tab-btn', { active: reviewType === 'written' }]"
+                                @click="reviewType = 'written'">추천순 러닝화</div>
+                        </div>
+
+                        <div v-if="reviewType === 'available'">
+                            <div v-for="item in availableReviews" :key="item.orderNo" class="review-item">
+                                <div class="review-details">
+                                    <img :src="item.productImage" alt="상품 이미지" class="product-image">
+                                    <div class="product-info">
+                                        <p class="product-name">{{ item.productName }}</p>
+                                        <p>추천수 : #{{ item.orderNo }}</p>
+                                        <p v-if="item.color">color : {{ item.color }}</p>
+                                    </div>
+                                </div>
+                                <div class="review-action">
+                                    <span class="review-meta">작성기한: D-{{ item.deadline }}</span>
+                                    <button>추천</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div v-if="reviewType === 'written'">
+                            <div v-for="item in recommendedReviews" :key="item.orderNo" class="review-item">
+                                <div class="review-details">
+                                    <img :src="item.productImage" alt="상품 이미지" class="product-image">
+                                    <div class="product-info">
+                                        <p class="product-name">{{ item.productName }}</p>
+                                        <p>추천수 : #{{ item.orderNo }}</p>
+                                        <p v-if="item.color">color : {{ item.color }}</p>
+                                    </div>
+                                </div>
+                                <div class="review-action">
+                                    <span class="review-meta">작성기한: D-{{ item.deadline }}</span>
+                                    <button>추천</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div v-if="activeMypageTab === 'account'">
+                        <h2>계정 상세</h2>
+                        <div v-if="!accountDetails">
+                            <p>정보를 불러오는 중...</p>
+                        </div>
+                        <ul v-else class="account-details-list">
+                            <li class="account-details-item">
+                                <span class="account-details-label">아이디:</span>
+                                <span>{{ accountDetails.ID }}</span>
+                            </li>
+                            <li class="account-details-item">
+                                <span class="account-details-label">이름:</span>
+                                <span>{{ accountDetails.NAME }}</span>
+                            </li>
+                            <li class="account-details-item">
+                                <span class="account-details-label">성별:</span>
+                                <span>{{ accountDetails.GENDER }}</span>
+                            </li>
+                            <li class="account-details-item">
+                                <span class="account-details-label">생년월일:</span>
+                                <span>{{ accountDetails.BIRTH }}</span>
+                            </li>
+                            <li class="account-details-item">
+                                <span class="account-details-label">이메일:</span>
+                                <span>{{ accountDetails.EMAIL }}</span>
+                            </li>
+                            <li class="account-details-item">
+                                <span class="account-details-label">휴대폰:</span>
+                                <span>{{ accountDetails.PHONE }}</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div v-if="activeMypageTab === 'withdraw'">
+                        <div class="withdraw-content">
+                            <h2>회원 탈퇴</h2>
+                            <p>회원 탈퇴를 진행하시면 모든 정보가 삭제됩니다.<br>정말 탈퇴하시겠습니까?</p>
+                            <button @click="withdrawAccount">탈퇴하기</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </section>
-    </div>
+
+        <div v-if="showMessageBox" class="message-box">
+            <p>{{ messageBoxText }}</p>
+            <button @click="closeMessageBox">확인</button>
+        </div>
     </div>
 </body>
 
 </html>
-
 <script>
     const app = Vue.createApp({
         data() {
             return {
-                // 변수 - (key : value)
-                isLoggedIn: false
+                isLoggedIn: false,
+                activeMypageTab: 'reviews',
+                reviewType: 'available',
+                showMessageBox: false,
+                messageBoxText: '',
+                accountDetails: null,
+                mypageTabs: [
+                    { name: 'account', label: '계정 상세' },
+                    { name: 'reviews', label: '내가 찜한 목록' },
+                    { name: 'withdraw', label: '회원탈퇴' },
+                ],
+
+                availableReviews: [
+                    {
+                        orderNo: '13377',
+                        productImage: '/img/su1.jpg',
+                        productName: '호카 본디 9 (블루) ',
+                        color: '블루',
+                        deadline: 5
+                    },
+                    {
+                        orderNo: '12788',
+                        productImage: '/img/su2.jpg',
+                        productName: '아디다스 슈퍼노바 라이즈 (블랙삼선)',
+                        color: '검정',
+                        deadline: 1
+                    },
+                    {
+                        orderNo: '12788',
+                        productImage: '/img/su3.jpg',
+                        productName: '나이키 페가수스41 (화이트레드)',
+                        color: '화이트레드',
+                        deadline: 5
+                    }
+                ],
+                recommendedReviews: [
+                    {
+                        orderNo: '15520',
+                        productImage: '/img/su7.jpg',
+                        productName: '아디제로 아디오스 프로4',
+                        color: '화이트 레드',
+                        deadline: 3
+                    },
+                    {
+                        orderNo: '14890',
+                        productImage: '/img/su5.jpg',
+                        productName: '아디제로 타쿠미 센 10',
+                        color: '형광색',
+                        deadline: 2
+                    },
+                    {
+                        orderNo: '14101',
+                        productImage: '/img/su8.jpg',
+                        productName: '씨엘로 X1 2.0',
+                        color: '블루 화이트',
+                        deadline: 7
+                    }
+                ]
 
             };
         },
         methods: {
-            // 함수(메소드) - (key : function())
-            fnUserList: function () {
-                let self = this;
-                let param = {};
-                $.ajax({
-                    url: "http://localhost:3009/",
-                    dataType: "json",
-                    type: "GET",
-                    data: param,
-                    success: function (data) {
-
-                    }
-                });
-            },
             logout: function () {
-                sessionStorage.clear(); // 세션 스토리지의 모든 데이터 삭제
-                this.isLoggedIn = false; // 로그인 상태를 false로 변경
-                alert("로그아웃 되었습니다.");
-                location.reload(); // 페이지 새로고침
+                sessionStorage.clear();
+                this.isLoggedIn = false;
+                this.showCustomMessage("로그아웃 되었습니다.");
             },
-            // 페이지 로드 시 로그인 상태를 확인하는 메서드
             checkLoginStatus: function () {
                 if (sessionStorage.getItem("sessionId")) {
                     this.isLoggedIn = true;
                 } else {
                     this.isLoggedIn = false;
                 }
+            },
+            // 커스텀 메시지 박스를 표시하는 함수
+            showCustomMessage: function (message) {
+                this.messageBoxText = message;
+                this.showMessageBox = true;
+            },
+            // 커스텀 메시지 박스를 닫는 함수
+            closeMessageBox: function () {
+                this.showMessageBox = false;
+                // 필요에 따라 페이지를 새로고침
+                location.reload();
+            },
+            // 회원 탈퇴를 시뮬레이션하는 함수
+            withdrawAccount: function () {
+                const playerNo = sessionStorage.getItem("sessionId");
+                if (!playerNo) {
+                    this.showCustomMessage("로그인 정보가 없습니다.");
+                    return;
+                }
+
+                fetch(`http://localhost:3009/api/user/${playerNo}`, {
+                    method: 'DELETE'
+                })
+                    .then(response => {
+                        if (!response.ok) throw new Error("회원 탈퇴에 실패했습니다.");
+                        return response.json();
+                    })
+                    .then(data => {
+                        sessionStorage.clear();
+                        this.isLoggedIn = false;
+                        this.showCustomMessage(data.message);
+                    })
+                    .catch(err => {
+                        console.error("회원 탈퇴 실패:", err);
+                        this.showCustomMessage("회원 탈퇴에 실패했습니다.");
+                    });
+            },
+            fetchAccountDetails: function () {
+                const playerNo = sessionStorage.getItem("sessionId"); // Assuming sessionId stores PLAYERNO
+                if (!playerNo) {
+                    console.error("No player number found in session storage.");
+                    return;
+                }
+                fetch(`http://localhost:3009/api/user/${playerNo}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error("사용자 정보를 불러올 수 없습니다.");
+                        return response.json();
+                    })
+                    .then(data => {
+                        this.accountDetails = data;
+                    })
+                    .catch(err => {
+                        console.error("회원 정보 가져오기 실패:", err);
+                        this.showCustomMessage("회원 정보를 불러오는데 실패했습니다.");
+                    });
             }
-        }, // methods
+        },
         mounted() {
-            // 처음 시작할 때 실행되는 부분
-            let self = this;
             this.checkLoginStatus();
+            if (this.isLoggedIn) {
+                this.fetchAccountDetails();
+
+            }
         }
     });
 
