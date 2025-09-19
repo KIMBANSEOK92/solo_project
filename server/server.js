@@ -20,43 +20,6 @@ const dbConfig = {
   connectString: 'localhost:1521/xe'
 };
 
-// --- API 엔드포인트 ---
-
-/**
- * ID 중복 확인 API
- * 프론트엔드에서 입력한 아이디가 데이터베이스에 존재하는지 확인합니다.
- */
-app.get('/check-id', async (req, res) => {
-  let connection;
-  try {
-    const userId = req.query.id;
-    if (!userId) {
-      return res.status(400).json({ isDuplicate: true, message: '아이디를 입력해주세요.' });
-    }
-
-    connection = await oracledb.getConnection(dbConfig);
-    // EXERCISE 테이블에서 해당 USERID를 가진 레코드 수를 셉니다.
-    const result = await connection.execute(
-      `SELECT COUNT(*) FROM EXERCISE WHERE USERID = :id`,
-      { id: userId } // 바인드 변수를 사용하여 SQL Injection 방지
-    );
-    const isDuplicate = result.rows[0][0] > 0;
-    res.json({ isDuplicate }); // { isDuplicate: true/false } 형태로 응답
-
-  } catch (err) {
-    console.error("ID 중복 확인 오류:", err);
-    res.status(500).json({ success: false, message: '서버 오류가 발생했습니다.' });
-  } finally {
-    if (connection) {
-      try {
-        await connection.close();
-      } catch (err) {
-        console.error("DB 연결 종료 오류:", err);
-      }
-    }
-  }
-});
-
 /**
  * 회원가입 API
  * 프론트엔드에서 전달받은 회원 정보를 EXERCISE 테이블에 저장합니다.
@@ -101,7 +64,7 @@ app.get('/search', async (req, res) => {
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
-    const result = await connection.execute(`SELECT * FROM STUDENT WHERE STU_NO = :stuNo`, [stuNo]);
+    const result = await connection.execute(`SELECT * FROM EXERCISE WHERE STU_NO = :stuNo`, [stuNo]);
     const columnNames = result.metaData.map(column => column.name);
     const rows = result.rows.map(row => {
       const obj = {};
@@ -332,49 +295,31 @@ app.get('/login', async (req, res) => {
   }
 });
 
-
-/**
- * 회원가입 API
- * 프론트엔드에서 전달받은 회원 정보를 EXERCISE 테이블에 저장합니다.
- */
-app.get('/signup', async (req, res) => {
+app.get('/check-id', async (req, res) => {
+  const { id } = req.query;
   let connection;
+
   try {
     connection = await oracledb.getConnection(dbConfig);
-    const { userId, password, name, gender, email, birth, phone } = req.query;
 
-    const sql = `
-    INSERT INTO EXERCISE (PLAYERNO, USERID, PASSWORD, NAME, GENDER, EMAIL, BIRTH, PHONE)
-    VALUES (EXERCISE_SEQ.NEXTVAL, :userId, :password, :name, :gender, :email, TO_DATE(:birth, 'YYYY-MM-DD'), :phone)
-    `;
+    const query = `SELECT COUNT(*) AS CNT FROM EXERCISE WHERE USERID = :id`;
+    const result = await connection.execute(
+      query,
+      { id },
+      { outFormat: oracledb.OUT_FORMAT_OBJECT }
+    );
 
-    const binds = {
-      userId,
-      password,
-      name,
-      gender,
-      email,
-      birth,
-      phone
-    };
-
-    const result = await connection.execute(sql, binds, { autoCommit: true });
-
-    if (result.rowsAffected === 1) {
-      res.json({ success: true, message: '회원가입이 완료되었습니다.' });
-    } else {
-      res.status(400).json({ success: false, message: '회원가입에 실패했습니다.' });
-    }
-
-  } catch (err) {
-    console.error("회원가입 실패:", err);
-    res.status(500).json({ success: false, message: '서버 오류가 발생했습니다. ' + err.message });
+    const isDuplicate = result.rows[0].CNT > 0;
+    res.json({ isDuplicate });
+  } catch (error) {
+    console.error('아이디 중복 확인 오류:', error);
+    res.status(500).json({ isDuplicate: true });
   } finally {
     if (connection) {
       try {
         await connection.close();
       } catch (err) {
-        console.error("DB 연결 종료 오류:", err);
+        console.error('DB 연결 해제 오류:', err);
       }
     }
   }
@@ -384,7 +329,7 @@ app.get('/signup', async (req, res) => {
  * 회원가입 API (PLAYERNO가 없는 경우)
  * PLAYERNO를 랜덤하게 생성하여 회원 정보를 저장합니다.
  */
-app.get('/signup1', async (req, res) => {
+app.get('/signup', async (req, res) => {
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
@@ -467,59 +412,42 @@ app.get('/findPassword', async (req, res) => {
   }
 });
 
-/**
- * 계정 상세 정보 조회
- * PLAYERNO를 사용하여 사용자 상세 정보를 조회합니다.
- */
-app.get('/mypage/details/:playerNo', async (req, res) => {
-  let connection;
-  try {
-    const playerNo = req.params.playerNo;
-    connection = await oracledb.getConnection(dbConfig);
-    const query = `SELECT PLAYERNO, USERID, NAME, GENDER, TO_CHAR(BIRTH, 'YYYY-MM-DD') AS BIRTH, EMAIL, PHONE FROM EXERCISE WHERE PLAYERNO = :playerNo`;
-    const result = await connection.execute(query, { playerNo: playerNo }, { outFormat: oracledb.OUT_FORMAT_OBJECT });
-
-    if (result.rows.length > 0) {
-      res.json({ success: true, user: result.rows[0] });
-    } else {
-      res.status(404).json({ success: false, message: '사용자를 찾을 수 없습니다.' });
+// 사용자 계정 상세 정보 가져오기 (GET)
+app.get('/api/user/:id', (req, res) => {
+  const userId = req.params.id;
+  const sql = `SELECT ID, NAME, GENDER, BIRTH, EMAIL, PHONE FROM USER WHERE ID = ?`;
+  db.query(sql, [userId], (err, results) => {
+    if (err) {
+      console.error('사용자 데이터 조회 오류:', err);
+      return res.status(500).json({ message: '사용자 데이터를 가져오는 중 오류가 발생했습니다.' });
     }
-  } catch (error) {
-    console.error('Error fetching user details:', error);
-    res.status(500).json({ success: false, message: '사용자 정보를 가져오는 중 서버 오류가 발생했습니다.' });
-  } finally {
-    if (connection) {
-      try { await connection.close(); } catch (err) { console.error('Error closing database connection', err); }
+    if (results.length === 0) {
+      return res.status(404).json({ message: '사용자를 찾을 수 없습니다.' });
     }
-  }
+    res.json(results[0]);
+  });
 });
 
-/**
- * 회원 탈퇴
- * PLAYERNO를 사용하여 사용자 계정을 삭제합니다.
- */
-app.get('/mypage/withdraw/:playerNo', async (req, res) => {
-  let connection;
-  try {
-    const playerNo = req.params.playerNo;
-    connection = await oracledb.getConnection(dbConfig);
-    const query = `DELETE FROM EXERCISE WHERE PLAYERNO = :playerNo`;
-    const result = await connection.execute(query, { playerNo: playerNo }, { autoCommit: true });
+// 사용자 계정 탈퇴 (DELETE)
+app.delete('/api/user/:id', (req, res) => {
+  const userId = req.params.id;
+  const { password } = req.body;
 
-    if (result.rowsAffected === 1) {
-      res.json({ success: true, message: '회원 탈퇴가 완료되었습니다.' });
-    } else {
-      res.status(404).json({ success: false, message: '탈퇴할 사용자를 찾을 수 없습니다.' });
+  // 실제 애플리케이션에서는 비밀번호를 먼저 확인하는 로직이 필요합니다.
+  // 이 예제에서는 비밀번호가 유효하다고 가정하고 진행합니다.
+  const sql = `DELETE FROM USER WHERE ID = ?`;
+  db.query(sql, [userId], (err, result) => {
+    if (err) {
+      console.error('회원 탈퇴 처리 오류:', err);
+      return res.status(500).json({ message: '회원 탈퇴에 실패했습니다.' });
     }
-  } catch (error) {
-    console.error('Error deleting user:', error);
-    res.status(500).json({ success: false, message: '회원 탈퇴 처리 중 서버 오류가 발생했습니다.' });
-  } finally {
-    if (connection) {
-      try { await connection.close(); } catch (err) { console.error('Error closing database connection', err); }
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ message: '사용자 정보가 없습니다.' });
     }
-  }
+    res.status(200).json({ message: '회원 탈퇴가 완료되었습니다.' });
+  });
 });
+
 
 // 서버 시작
 app.listen(port, () => {
