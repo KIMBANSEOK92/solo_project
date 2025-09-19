@@ -3,8 +3,10 @@
 #### 🙆‍♀️ 프로그램을 만든 목적 : 
 - 러닝 1000만시대를 넘어서 현재 더더욱 많이 지고 있다. 러닝의 중요성 더욱 알리고 더 나아가 안전하게 달리는 정보를 제공함으로써 효율적으로 달리는 러너들이 늘어나는 바램에서 만들게 되었다.
 
-![로그인페이지](https://github.com/user-attachments/assets/0323c450-a209-49b4-92fb-989c40a8325a)
-로그인 페이지 생성 </span>
+|작업 전 | 작업 후|
+|------|------|
+||<img src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/zx1.jpg.PNG" width="500" height="500">|
+
 
 <img width="902" height="663" alt="회원가입페이지" src="https://github.com/user-attachments/assets/14b5438d-d36d-4ff8-af29-0ee4503f06ba" />
 
