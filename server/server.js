@@ -1,3 +1,4 @@
+// Node.js Express 서버를 설정합니다.
 const express = require('express');
 const cors = require('cors');
 const oracledb = require('oracledb');
@@ -8,9 +9,9 @@ const port = 3009;
 
 // CORS 설정: 모든 출처에서의 요청을 허용합니다.
 app.use(cors());
-// JSON 요청 본문을 파싱하기 위한 미들웨어
-app.use(express.json());
+// URL-encoded 본문을 파싱하기 위한 미들웨어
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 
 // OracleDB 연결 설정
 const dbConfig = {
@@ -34,21 +35,18 @@ app.get('/check-id', async (req, res) => {
     }
 
     connection = await oracledb.getConnection(dbConfig);
-    // ESERCISE 테이블에서 해당 USERID를 가진 레코드 수를 셉니다.
+    // EXERCISE 테이블에서 해당 USERID를 가진 레코드 수를 셉니다.
     const result = await connection.execute(
-      `SELECT COUNT(*) FROM ESERCASE WHERE USERID = :id`,
+      `SELECT COUNT(*) FROM EXERCISE WHERE USERID = :id`,
       { id: userId } // 바인드 변수를 사용하여 SQL Injection 방지
     );
-    // 결과의 첫 번째 행, 첫 번째 열에 중복 여부 (0 또는 1 이상)가 있습니다.
     const isDuplicate = result.rows[0][0] > 0;
     res.json({ isDuplicate }); // { isDuplicate: true/false } 형태로 응답
 
   } catch (err) {
     console.error("ID 중복 확인 오류:", err);
-    // 오류 발생 시 클라이언트에게 서버 오류 메시지 전달
     res.status(500).json({ success: false, message: '서버 오류가 발생했습니다.' });
   } finally {
-    // DB 연결이 있으면 반드시 종료합니다.
     if (connection) {
       try {
         await connection.close();
@@ -61,55 +59,9 @@ app.get('/check-id', async (req, res) => {
 
 /**
  * 회원가입 API
- * 프론트엔드에서 전달받은 회원 정보를 ESERCASE 테이블에 저장합니다.
+ * 프론트엔드에서 전달받은 회원 정보를 EXERCISE 테이블에 저장합니다.
  */
 
-app.get('/signup', async (req, res) => {
-  let connection;
-  try {
-    connection = await oracledb.getConnection(dbConfig);
-    const { userId, password, name, gender, email, birth, phone } = req.query;
-
-    const sql = `
-    INSERT INTO ESERCASE (PLAYERNO, USERID, PASSWORD, NAME, GENDER, EMAIL, BIRTH, PHONE)
-    VALUES (ESERCASE_SEQ.NEXTVAL, :userId, :password, :name, :gender, :email, TO_DATE(:birth, 'YYYY-MM-DD'), :phone)
-    `;
-
-    const binds = {
-      userId,
-      password,
-      name,
-      gender,
-      email,
-      birth,
-      phone
-    };
-
-    const result = await connection.execute(sql, binds, { autoCommit: true });
-
-    if (result.rowsAffected === 1) {
-      res.json({ success: true, message: '회원가입이 완료되었습니다.' });
-    } else {
-      res.status(400).json({ success: false, message: '회원가입에 실패했습니다.' });
-    }
-
-  } catch (err) {
-    console.error("회원가입 실패:", err);
-    res.status(500).json({ success: false, message: '서버 오류가 발생했습니다. ' + err.message });
-  } finally {
-    if (connection) {
-      try {
-        await connection.close();
-      } catch (err) {
-        console.error("DB 연결 종료 오류:", err);
-      }
-    }
-  }
-});
-
-// --- 기존 API 엔드포인트 (필요에 따라 유지 또는 수정) ---
-
-// 루트 경로 ("/")
 app.get('/', (req, res) => {
   res.send('Hello World from the backend!');
 });
@@ -332,39 +284,118 @@ app.get('/board/update', async (req, res) => {
 app.get('/login', async (req, res) => {
   const { userId, pwd } = req.query;
   let connection;
+
+  console.log(`로그인 시도: 아이디 = ${userId}`);
+
   try {
+    // 관리자 계정 확인
+    if (userId === 'buingsin13' && pwd === 'PRO!333E') {
+      console.log('관리자 로그인 성공');
+      return res.json([{
+        isAdmin: true,
+        USERID: 'buingsin13',
+        NAME: '관리자',
+        GENDER: 'N/A',
+        message: '관리자 로그인 성공'
+      }]);
+    }
+
+    // 오라클 데이터베이스에 연결
     connection = await oracledb.getConnection(dbConfig);
-    const query = `SELECT USERID, NAME, GENDER FROM ESERCASE WHERE USERID = :userId AND PASSWORD = :pwd`;
-    const result = await connection.execute(query, { userId: userId, pwd: pwd }, { outFormat: oracledbe.OUT_FORMAT_OBJECT });
+
+    // 사용자 정보 조회
+    const query = `SELECT USERID, NAME, GENDER FROM EXERCISE WHERE USERID = :userId AND PASSWORD = :pwd`;
+    const result = await connection.execute(
+      query,
+      { userId, pwd },
+      { outFormat: oracledb.OUT_FORMAT_OBJECT }
+    );
 
     if (result.rows.length > 0) {
-      res.json(result.rows); // 로그인 성공 시 사용자 정보 반환
+      console.log('로그인 성공');
+      res.json(result.rows); // 항상 배열 형태로 반환
     } else {
-      res.json([]); // 로그인 실패 시 빈 배열 반환
+      console.log('로그인 실패');
+      res.json([]); // 빈 배열 반환
     }
   } catch (error) {
     console.error('로그인 쿼리 실행 중 오류 발생:', error);
-    res.status(500).send('서버 오류: ' + error.message);
+    res.status(500).json({ error: '서버 오류가 발생했습니다.' });
   } finally {
     if (connection) {
-      try { await connection.close(); } catch (err) { console.error('DB 연결 해제 중 오류 발생:', err); }
+      try {
+        await connection.close();
+      } catch (err) {
+        console.error('DB 연결 해제 중 오류 발생:', err);
+      }
     }
   }
 });
+
+
+/**
+ * 회원가입 API
+ * 프론트엔드에서 전달받은 회원 정보를 EXERCISE 테이블에 저장합니다.
+ */
+app.get('/signup', async (req, res) => {
+  let connection;
+  try {
+    connection = await oracledb.getConnection(dbConfig);
+    const { userId, password, name, gender, email, birth, phone } = req.query;
+
+    const sql = `
+    INSERT INTO EXERCISE (PLAYERNO, USERID, PASSWORD, NAME, GENDER, EMAIL, BIRTH, PHONE)
+    VALUES (EXERCISE_SEQ.NEXTVAL, :userId, :password, :name, :gender, :email, TO_DATE(:birth, 'YYYY-MM-DD'), :phone)
+    `;
+
+    const binds = {
+      userId,
+      password,
+      name,
+      gender,
+      email,
+      birth,
+      phone
+    };
+
+    const result = await connection.execute(sql, binds, { autoCommit: true });
+
+    if (result.rowsAffected === 1) {
+      res.json({ success: true, message: '회원가입이 완료되었습니다.' });
+    } else {
+      res.status(400).json({ success: false, message: '회원가입에 실패했습니다.' });
+    }
+
+  } catch (err) {
+    console.error("회원가입 실패:", err);
+    res.status(500).json({ success: false, message: '서버 오류가 발생했습니다. ' + err.message });
+  } finally {
+    if (connection) {
+      try {
+        await connection.close();
+      } catch (err) {
+        console.error("DB 연결 종료 오류:", err);
+      }
+    }
+  }
+});
+
+/**
+ * 회원가입 API (PLAYERNO가 없는 경우)
+ * PLAYERNO를 랜덤하게 생성하여 회원 정보를 저장합니다.
+ */
 app.get('/signup1', async (req, res) => {
   let connection;
   try {
     connection = await oracledb.getConnection(dbConfig);
     const { userId, password, name, gender, email, birth, phone } = req.query;
 
-    // PLAYERNO에 랜덤한 12자리 숫자 값을 생성
-    // Math.random()을 사용하여 100000000000부터 999999999999까지의 숫자를 생성
     const playerNo = Math.floor(100000000000 + Math.random() * 900000000000);
 
     const sql = `
-      INSERT INTO ESERCASE (PLAYERNO, USERID, PASSWORD, NAME, GENDER, EMAIL, BIRTH, PHONE)
+      INSERT INTO EXERCISE (PLAYERNO, USERID, PASSWORD, NAME, GENDER, EMAIL, BIRTH, PHONE)
       VALUES (:playerNo, :userId, :password, :name, :gender, :email, TO_DATE(:birth, 'YYYY-MM-DD'), :phone)
-     `;
+      `;
 
     const binds = {
       playerNo,
@@ -387,7 +418,6 @@ app.get('/signup1', async (req, res) => {
 
   } catch (err) {
     console.error("회원가입 실패:", err);
-    // ORA-01400 오류 처리 (PLAYERNO NOT NULL)
     if (err.code === 'ORA-01400') {
       res.status(500).json({ success: false, message: `회원가입에 실패했습니다. 필수 항목 누락: ${err.message}` });
     } else {
@@ -404,39 +434,22 @@ app.get('/signup1', async (req, res) => {
   }
 });
 
-
 app.get('/findPassword', async (req, res) => {
   let connection;
   try {
-    // 요청 쿼리에서 데이터 추출
     const { email, phone, birth } = req.query;
-
-    // 데이터 유효성 검사
     if (!email || !phone || !birth) {
       return res.status(400).json({ success: false, message: '모든 필드를 입력해주세요.' });
     }
-
-    // Oracle 데이터베이스에 연결
     connection = await oracledb.getConnection(dbConfig);
+    const sql = `SELECT "PASSWORD" FROM "EXERCISE" WHERE "EMAIL" = :email AND "PHONE" = :phone AND "BIRTH" = TO_DATE(:birth, 'YYYY-MM-DD')`;
 
-    // 데이터베이스에서 사용자 정보를 찾는 SQL 쿼리
-    // 날짜 형식 불일치 오류를 해결하기 위해 TO_DATE 함수를 사용했습니다.
-    const sql = `SELECT "PASSWORD" FROM "ESERCASE" WHERE "EMAIL" = :email AND "PHONE" = :phone AND "BIRTH" = TO_DATE(:birth, 'YYYY-MM-DD')`;
+    const result = await connection.execute(sql, { email, phone, birth });
 
-    // 쿼리 실행
-    const result = await connection.execute(
-      sql,
-      { email, phone, birth }
-    );
-
-    // 쿼리 결과 확인
     if (result.rows.length > 0) {
-      // 사용자를 찾았을 경우, 비밀번호를 반환
-      // OracleDB는 결과를 2차원 배열로 반환합니다. (rows: [ [ 'value' ] ])
       const userPassword = result.rows[0][0];
       return res.json({ success: true, message: `비밀번호: ${userPassword}` });
     } else {
-      // 사용자를 찾지 못했을 경우
       return res.status(404).json({ success: false, message: '일치하는 계정 정보가 없습니다.' });
     }
 
@@ -444,7 +457,6 @@ app.get('/findPassword', async (req, res) => {
     console.error('API 호출 또는 쿼리 실행 오류:', err);
     return res.status(500).json({ success: false, message: '서버 오류가 발생했습니다. 다시 시도해주세요.' });
   } finally {
-    // 연결이 존재하면 해제
     if (connection) {
       try {
         await connection.close();
@@ -455,14 +467,16 @@ app.get('/findPassword', async (req, res) => {
   }
 });
 
-// GET endpoint to fetch user details for MyPage
-// "계정 상세" (Account details) 기능
+/**
+ * 계정 상세 정보 조회
+ * PLAYERNO를 사용하여 사용자 상세 정보를 조회합니다.
+ */
 app.get('/mypage/details/:playerNo', async (req, res) => {
   let connection;
   try {
     const playerNo = req.params.playerNo;
     connection = await oracledb.getConnection(dbConfig);
-    const query = `SELECT PLAYERNO, USERID, NAME, GENDER, TO_CHAR(BIRTH, 'YYYY-MM-DD') AS BIRTH, EMAIL, PHONE FROM ESERCASE WHERE PLAYERNO = :playerNo`;
+    const query = `SELECT PLAYERNO, USERID, NAME, GENDER, TO_CHAR(BIRTH, 'YYYY-MM-DD') AS BIRTH, EMAIL, PHONE FROM EXERCISE WHERE PLAYERNO = :playerNo`;
     const result = await connection.execute(query, { playerNo: playerNo }, { outFormat: oracledb.OUT_FORMAT_OBJECT });
 
     if (result.rows.length > 0) {
@@ -480,15 +494,16 @@ app.get('/mypage/details/:playerNo', async (req, res) => {
   }
 });
 
-// GET endpoint to handle user withdrawal (account deletion)
-// NOTE: For a real-world application, a DELETE method is the correct choice for this type of action.
-// "회원 탈퇴" (Account withdrawal) 기능
+/**
+ * 회원 탈퇴
+ * PLAYERNO를 사용하여 사용자 계정을 삭제합니다.
+ */
 app.get('/mypage/withdraw/:playerNo', async (req, res) => {
   let connection;
   try {
     const playerNo = req.params.playerNo;
     connection = await oracledb.getConnection(dbConfig);
-    const query = `DELETE FROM ESERCASE WHERE PLAYERNO = :playerNo`;
+    const query = `DELETE FROM EXERCISE WHERE PLAYERNO = :playerNo`;
     const result = await connection.execute(query, { playerNo: playerNo }, { autoCommit: true });
 
     if (result.rowsAffected === 1) {
@@ -499,68 +514,6 @@ app.get('/mypage/withdraw/:playerNo', async (req, res) => {
   } catch (error) {
     console.error('Error deleting user:', error);
     res.status(500).json({ success: false, message: '회원 탈퇴 처리 중 서버 오류가 발생했습니다.' });
-  } finally {
-    if (connection) {
-      try { await connection.close(); } catch (err) { console.error('Error closing database connection', err); }
-    }
-  }
-});
-
-
-// GET endpoint for "best of the month" running shoes
-app.get('/api/shoes/best', async (req, res) => {
-  let connection;
-  try {
-    connection = await oracledb.getConnection(dbConfig);
-    // LIMIT 대신 ROWNUM을 사용합니다.
-    const query = 'SELECT ORDERNO, PRODUCT_NAME, PRODUCT_IMAGE, COLOR FROM RUNNING_SHOES WHERE ROWNUM <= 3 ORDER BY RECOMMEND_COUNT DESC';
-    const result = await connection.execute(query, [], { outFormat: oracledb.OUT_FORMAT_OBJECT });
-    res.json(result.rows);
-  } catch (err) {
-    console.error('Error fetching best shoes:', err);
-    res.status(500).json({ error: 'Failed to fetch shoe data.' });
-  } finally {
-    if (connection) {
-      try { await connection.close(); } catch (err) { console.error('Error closing database connection', err); }
-    }
-  }
-});
-
-// GET endpoint for "most recommended" running shoes
-app.get('/api/shoes/recommended', async (req, res) => {
-  let connection;
-  try {
-    connection = await oracledb.getConnection(dbConfig);
-    const query = 'SELECT ORDERNO, PRODUCT_NAME, PRODUCT_IMAGE, COLOR FROM RUNNING_SHOES ORDER BY RECOMMEND_COUNT DESC';
-    const result = await connection.execute(query, [], { outFormat: oracledb.OUT_FORMAT_OBJECT });
-    res.json(result.rows);
-  } catch (err) {
-    console.error('Error fetching recommended shoes:', err);
-    res.status(500).json({ error: 'Failed to fetch recommended shoes.' });
-  } finally {
-    if (connection) {
-      try { await connection.close(); } catch (err) { console.error('Error closing database connection', err); }
-    }
-  }
-});
-
-// Endpoint to handle "추천" (recommendation)
-app.post('/api/shoes/recommend/:orderNo', async (req, res) => {
-  let connection;
-  try {
-    const orderNo = req.params.orderNo;
-    connection = await oracledb.getConnection(dbConfig);
-    const query = 'UPDATE RUNNING_SHOES SET RECOMMEND_COUNT = RECOMMEND_COUNT + 1 WHERE ORDERNO = :orderNo';
-    const result = await connection.execute(query, { orderNo: orderNo }, { autoCommit: true });
-
-    if (result.rowsAffected === 1) {
-      res.status(200).json({ message: '추천이 완료되었습니다.' });
-    } else {
-      res.status(404).json({ message: '신발을 찾을 수 없습니다.' });
-    }
-  } catch (err) {
-    console.error('Error updating recommendation count:', err);
-    res.status(500).json({ error: 'Failed to recommend.' });
   } finally {
     if (connection) {
       try { await connection.close(); } catch (err) { console.error('Error closing database connection', err); }
