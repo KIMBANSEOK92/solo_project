@@ -3,9 +3,21 @@
 #### 🙆‍♀️ 프로그램을 만든 목적 : 
 - 러닝 1000만시대를 넘어서 현재 더더욱 많이 지고 있다. 러닝의 중요성 더욱 알리고 더 나아가 안전하게 달리는 정보를 제공함으로써 효율적으로 달리는 러너들이 늘어나는 바램에서 만들게 되었다.
 
+#### 🥇 프로그램 기간
+2025-09-12 ~ 2025-09-18
+
+### 💍 작업 프로그램
+![Vue.js](https://img.shields.io/badge/vuejs-%2335495e.svg?style=for-the-badge&logo=vuedotjs&logoColor=%234FC08D) ![Oracle](https://img.shields.io/badge/Oracle-F80000?style=for-the-badge&logo=oracle&logoColor=white)
+----
+### 🎁 로그인페이지
+- 로그인 로그아웃 정상적으로 작성
+- 회원가입 기록이 없을시 알림창
+- 일반아아디 관리자아이디 나눔
+- 
+
 |작업 전 | 작업 후|
 |------|------|
-||<img src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/zx1.jpg.PNG" width="500" height="500">|
+|<img src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%8E%98%EC%9D%B4%EC%A7%80.jpg" width="450" height="500">|<img src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/zx1.jpg.PNG" width="450" height="600">|
 
 
 <img width="902" height="663" alt="회원가입페이지" src="https://github.com/user-attachments/assets/14b5438d-d36d-4ff8-af29-0ee4503f06ba" />
