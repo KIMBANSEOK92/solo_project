@@ -453,23 +453,30 @@
     const app = Vue.createApp({
         data() {
             return {
-                isLoggedIn: false,
+                isLoggedIn: true, // 디버깅용 true 고정
                 activeMypageTab: 'reviews',
                 reviewType: 'available',
                 showMessageBox: false,
                 messageBoxText: '',
-                accountDetails: null,
+                password: '',
+                accountDetails: {
+                    ID: 'user123',
+                    NAME: '홍길동',
+                    GENDER: '남성',
+                    BIRTH: '1990-01-01',
+                    EMAIL: 'hong@test.com',
+                    PHONE: '010-1234-5678'
+                },
                 mypageTabs: [
                     { name: 'account', label: '계정 상세' },
                     { name: 'reviews', label: '내가 찜한 목록' },
                     { name: 'withdraw', label: '회원탈퇴' },
                 ],
-
                 availableReviews: [
                     {
                         orderNo: '13377',
                         productImage: '/img/su1.jpg',
-                        productName: '호카 본디 9 (블루) ',
+                        productName: '호카 본디 9 (블루)',
                         color: '블루',
                         deadline: 5
                     },
@@ -479,13 +486,6 @@
                         productName: '아디다스 슈퍼노바 라이즈 (블랙삼선)',
                         color: '검정',
                         deadline: 1
-                    },
-                    {
-                        orderNo: '12788',
-                        productImage: '/img/su3.jpg',
-                        productName: '나이키 페가수스41 (화이트레드)',
-                        color: '화이트레드',
-                        deadline: 5
                     }
                 ],
                 recommendedReviews: [
@@ -502,18 +502,11 @@
                         productName: '아디제로 타쿠미 센 10',
                         color: '형광색',
                         deadline: 2
-                    },
-                    {
-                        orderNo: '14101',
-                        productImage: '/img/su8.jpg',
-                        productName: '씨엘로 X1 2.0',
-                        color: '블루 화이트',
-                        deadline: 7
                     }
                 ]
-
             };
         },
+
         methods: {
             logout: function () {
                 sessionStorage.clear();
