@@ -1,4 +1,4 @@
-|<H2>개인 프로젝트</H2>
+<H2>개인 프로젝트</H2>
 
 #### 🙆‍♀️ 프로그램을 만든 목적 : 
 - 러닝 1000만시대를 넘어서 현재 더더욱 많이 지고 있다. 러닝의 중요성 더욱 알리고 더 나아가 안전하게 달리는 정보를 제공함으로써 효율적으로 달리는 러너들이 늘어나는 바램에서 만들게 되었다.
@@ -74,7 +74,7 @@
 
 |작업 전 | 작업 후|
 |------|------|
-|<img width="450" height="250" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EC%86%8C%EA%B0%9C%ED%8E%98%EC%9D%B4%EC%A5%A5.jpg" />|<img width="450" height="auto" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EC%86%8C%EA%B0%9C.PNG" />|
+|<img width="450" height="250" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%80.PNG" />|<img width="450" height="auto" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%801.png" />|
 
 
 
