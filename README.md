@@ -47,7 +47,7 @@
 
 |작업 전 | 작업 후|
 |------|------|
-|<img width="450" height="500" alt="메인페이지" src="(https://github.com/user-attachments/assets/c03c673f-d209-40f3-8ece-f9abca33f958)" />||
+|<img width="450" height="500" alt="메인페이지" src="https://github.com/user-attachments/assets/c03c673f-d209-40f3-8ece-f9abca33f958" />|https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EB%9F%AC%EB%8B%9D%ED%99%94%20%EC%B6%94%EC%B2%9C1.PNG|
 
 
 
