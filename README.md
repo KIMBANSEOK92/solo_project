@@ -28,7 +28,7 @@
 
 |작업 전 | 작업 후|
 |------|------|
-|<img width="450" height="500" alt="회원가입페이지" src="https://github.com/user-attachments/assets/14b5438d-d36d-4ff8-af29-0ee4503f06ba" />|<img width="4500" height="500" alt="회원가입페이지" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.PNG" />|
+|<img width="450" height="500" alt="회원가입페이지" src="https://github.com/user-attachments/assets/14b5438d-d36d-4ff8-af29-0ee4503f06ba" />|<img width="450" height="600" alt="회원가입페이지" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.PNG" />|
 
 
 
