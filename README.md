@@ -20,9 +20,17 @@
 |<img src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%8E%98%EC%9D%B4%EC%A7%80.jpg" width="450" height="500">|<img src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/zx1.jpg.PNG" width="450" height="600">|
 
 
-<img width="902" height="663" alt="회원가입페이지" src="https://github.com/user-attachments/assets/14b5438d-d36d-4ff8-af29-0ee4503f06ba" />
 
-회원가입페이지 생성
+
+### 🥽 회원가입페이지
+- 아이디 중복확인
+- 로그인 후 메인페이지 이동
+
+|작업 전 | 작업 후|
+|------|------|
+|<img width="902" height="663" alt="회원가입페이지" src="https://github.com/user-attachments/assets/14b5438d-d36d-4ff8-af29-0ee4503f06ba" />|
+
+
 
 <img width="1144" height="560" alt="메인페이지" src="https://github.com/user-attachments/assets/81bab70d-e133-4e3f-8498-52ddde58cb21" />
 
