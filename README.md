@@ -66,6 +66,10 @@
 |------|------|
 |<img width="450" height="250" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/map.jpg" />|<img width="450" height="auto" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EC%98%A4%EB%8A%94%EA%B8%B8.PNG" />|
 
+### 🎉 소개페이지
+- 러닝에 대한 간단한 정보 소개
+- 내가 사이트를 운영하고자 하는 간단설명
+|<img width="450" height="250" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/map.jpg" />|<img width="450" height="auto" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EC%98%A4%EB%8A%94%EA%B8%B8.PNG" />|
 
 
 
