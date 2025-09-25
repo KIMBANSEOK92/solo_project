@@ -33,19 +33,22 @@
 
 
 ### 🔮 메인페이지
+- 기본 카테고리를 상단에 배치
+- 기본적인 메인화면 생성
+  
 |작업 전 | 작업 후|
 |------|------|
-|<img width="450" height="500" alt="메인페이지" src="https://github.com/user-attachments/assets/81bab70d-e133-4e3f-8498-52ddde58cb21" />|<img width="450" height="500" alt="메인페이지" src="https://github.com/user-attachments/assets/81bab70d-e133-4e3f-8498-52ddde58cb21" />|
+|<img width="450" height="500" alt="메인페이지" src="https://github.com/user-attachments/assets/81bab70d-e133-4e3f-8498-52ddde58cb21" />|<img width="450" height="500" alt="메인페이지" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EB%A9%94%EC%9D%B8%ED%99%94%EB%A9%B4.jsp.PNG" />|
 
 
 
+### 🎫 러닝화추천페이지
+- 최신 러닝화 추천
 
-![러닝화 추천](https://github.com/user-attachments/assets/c03c673f-d209-40f3-8ece-f9abca33f958)
+|작업 전 | 작업 후|
+|------|------|
+|<img width="450" height="500" alt="메인페이지" src="(https://github.com/user-attachments/assets/c03c673f-d209-40f3-8ece-f9abca33f958)" />||
 
-
-실시간 위치를 제공함으로써 러닝회원들의 효율적인 코스 안내를 원활히 할 수 있게끔 도와주기
-
-![데이터](https://github.com/user-attachments/assets/00654741-ea0c-42e4-99c6-82bc88b164af)
 
 
 러닝회원의 실시간 심박수와 페이스 발걸음수 뛴 km등을 안내해준다
