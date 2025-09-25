@@ -74,7 +74,7 @@
 
 |작업 전 | 작업 후|
 |------|------|
-|<img width="450" height="250" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%80.PNG" />|<img width="450" height="auto" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%801.png" />|
+|<img width="450" height="250" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%801.png" />|<img width="450" height="auto" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EB%A7%88%EC%9D%B4%ED%8E%98%EC%9D%B4%EC%A7%80.PNG" />|
 
 
 
