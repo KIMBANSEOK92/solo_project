@@ -1,3 +1,12 @@
+.box {
+  display: inline-block;
+  padding: 10px;
+  border: 1px solid #ccc;
+  width: auto;
+  max-width: 100%;
+  overflow-wrap: break-word;
+}
+
 |<H2>개인 프로젝트</H2>
 
 #### 🙆‍♀️ 프로그램을 만든 목적 : 
@@ -17,7 +26,7 @@
 
 |작업 전 | 작업 후|
 |------|------|
-|<img src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%8E%98%EC%9D%B4%EC%A7%80.jpg" width="450" height="400">|<img src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/zx1.jpg.PNG" width="450" height="700">|
+|<img src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EB%A1%9C%EA%B7%B8%EC%9D%B8%ED%8E%98%EC%9D%B4%EC%A7%80.jpg" width="450" height="auto">|<img src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/zx1.jpg.PNG" width="450" height="auto">|
 
 
 
@@ -29,7 +38,7 @@
 
 |작업 전 | 작업 후|
 |------|------|
-|<img width="450" height="500" alt="회원가입페이지" src="https://github.com/user-attachments/assets/14b5438d-d36d-4ff8-af29-0ee4503f06ba" />|<img width="450" height="700" alt="회원가입페이지" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.PNG" />|
+|<img width="450" height="auto" alt="회원가입페이지" src="https://github.com/user-attachments/assets/14b5438d-d36d-4ff8-af29-0ee4503f06ba" />|<img width="450" height="auto" alt="회원가입페이지"               src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.PNG" />|
 
 
 ### 🔮 메인페이지
@@ -38,7 +47,7 @@
   
 |작업 전 | 작업 후|
 |------|------|
-|<img width="450" height="500" alt="메인페이지" src="https://github.com/user-attachments/assets/81bab70d-e133-4e3f-8498-52ddde58cb21" />|<img width="450" height="500" alt="메인페이지" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EB%A9%94%EC%9D%B8%ED%99%94%EB%A9%B4.jsp.PNG" />|
+|<img width="450" height="auto" alt="메인페이지" src="https://github.com/user-attachments/assets/81bab70d-e133-4e3f-8498-52ddde58cb21" />|<img width="450" height="auto" alt="메인페이지" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EB%A9%94%EC%9D%B8%ED%99%94%EB%A9%B4.jsp.PNG" />|
 
 
 
@@ -47,14 +56,14 @@
 
 |작업 전 | 작업 후|
 |------|------|
-|<img width="450" height="450" alt="메인페이지" src="https://github.com/user-attachments/assets/c03c673f-d209-40f3-8ece-f9abca33f958" />|<img width="450" height="800" alt="메인페이지" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EB%9F%AC%EB%8B%9D%ED%99%94%20%EC%B6%94%EC%B2%9C1.PNG" />|
+|<img width="450" height="250" alt="메인페이지" src="https://github.com/user-attachments/assets/c03c673f-d209-40f3-8ece-f9abca33f958" />|<img width="450" height="auto" alt="메인페이지" src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%EB%9F%AC%EB%8B%9D%ED%99%94%20%EC%B6%94%EC%B2%9C1.PNG" />|
 
 
 
 러닝회원의 실시간 심박수와 페이스 발걸음수 뛴 km등을 안내해준다
 
 
-<img width="773" height="1673" alt="데이터1" src="https://github.com/user-attachments/assets/e7a2e537-0dee-48ff-8d61-99162a478f50" />
+<img width="450" height="auto" alt="데이터1" src="https://github.com/user-attachments/assets/e7a2e537-0dee-48ff-8d61-99162a478f50" />
 
 
 러닝을 시작하면 자동으로 평균페이스 킬로미터 심박수 발걸음수 등 사용자의 신체데이터를 실시간으로 전달
