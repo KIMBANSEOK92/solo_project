@@ -29,7 +29,8 @@
 
 |Figma|완성|
 |------|------|
-|<img width="450" height="300" alt="회원가입페이지" src="https://github.com/user-attachments/assets/14b5438d-d36d-4ff8-af29-0ee4503f06ba" />|<img width="450" height="300" alt="회원가입페이지"               src="https://github.com/KIMBANSEOK92/solo_project/blob/main/img/%ED%9A%8C%EC%9B%90%EA%B0%80%EC%9E%85.PNG" />|
+|<img width="450" height="300" alt="회원가입페이지" src="https://github.com/user-attachments/assets/14b5438d-d36d-4ff8-af29-0ee4503f06ba" />|<img width="450" height="300" alt="회원가입 화면 1" src="https://github.com/user-attachments/assets/576e1817-0c86-4ffb-80ff-1942f46320bf" />
+|
 
 
 ### 🔮 메인페이지
